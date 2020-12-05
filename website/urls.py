@@ -14,7 +14,7 @@ urlpatterns = [
     # path('exchange/', views.exchange, name='exchange'),     # 学术活动
     path('scholar/', views.scholar, name='scholar'),    # 学者
     path('schoolfellow/', views.schoolfellow, name='schoolfellow'),    # 学友风采
-    path('contact/', views.contact, name='contact'),
     path('exchange/<exchange_name>/', views.exchange_list, name='exchange'),
+    path('<list_name>/p/<int:page_no>', views.common_list, name='common_list_page'),
     path('', views.index, name='index'),
 ]

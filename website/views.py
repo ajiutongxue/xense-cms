@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from .models import SinglePage, Article, Category
+from .models import Article, Category
 
 
 # Create your views here.
@@ -14,9 +14,9 @@ def about(request, page_name='us'):
     # alliance - 联盟大学
     # course - 发展历程
     # honor - 中心荣誉
-    page = get_object_or_404(SinglePage, slug=page_name, is_published=True)
+    page = get_object_or_404(Article, slug=page_name, is_published=True)
     # print(request)
-    sub_cate_list = SinglePage.objects.filter(category__slug='about').order_by('rank_num')    #all #objects #.get(slug='about')
+    sub_cate_list = Article.objects.filter(category__slug='about').order_by('rank_num')    #all #objects #.get(slug='about')
     print(page.category.slug)
     context_data = {
         'page': page,
@@ -29,6 +29,16 @@ def about(request, page_name='us'):
 
 
 def news(request):
+    cate = Category.objects.get(slug='news')
+    news_list = Article.objects.all()
+    context = {
+        'news_list': news_list,
+        'cate': cate
+    }
+    return render(request, 'website/news.html', context=context)
+
+
+def common_list(request):
     cate = Category.objects.get(slug='news')
     news_list = Article.objects.all()
     context = {

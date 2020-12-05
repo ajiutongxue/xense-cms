@@ -22,7 +22,7 @@
                                 {% else %}
                             <li>
                         {% endif %}
-                    <a href="{% url context_data.url_base page_name=item.slug %}">{{ item.page_title }}</a>
+                    <a href="{% url context_data.url_base page_name=item.slug %}">{{ item.title }}</a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -38,9 +38,9 @@
                         <a href="{% url context_data.parent_link %}">{{ context_data.page.category.cate_name }}</a>
                         <span>&gt;</span>
                     {% endif %}
-                    <span>{{ context_data.page.page_title }}</span>
+                    <span>{{ context_data.page.title }}</span>
                 </div>
-                <div class="__title">{{ context_data.page.page_title }}</div>
+                <div class="__title">{{ context_data.page.title }}</div>
                 <div id="select-menu" class="category-select-menu">
                     <div class="__name">{{ context_data.page.category.cate_name }} <i class="iconfont icon-caret-down"></i></div>
                     <ul class="__list">
@@ -50,7 +50,7 @@
                                     {% else %}
                                 <li>
                             {% endif %}
-                        <a href="{% url context_data.url_base page_name=item.slug %}">{{ item.page_title }}</a>
+                        <a href="{% url context_data.url_base page_name=item.slug %}">{{ item.title }}</a>
                         </li>
                         {% endfor %}
                     </ul>
