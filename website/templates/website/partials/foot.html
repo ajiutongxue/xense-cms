@@ -1,0 +1,104 @@
+<div class="site-map">
+    <div class="__title">网站地图</div>
+    <div class="__section">
+        <div class="__cata-name">关于中心</div>
+        <ul>
+            <li><a href="/about-us.html">中心简介</a></li>
+            <li><a href="/about-lm.html">联盟大学</a></li>
+            <li><a href="/about-dsj.html">大事记</a></li>
+            <li><a href="/about-honor.html">中心荣誉</a></li>
+        </ul>
+    </div>
+
+    <div class="__section">
+        <div class="__cata-name">新闻动态</div>
+        <ul>
+            <li><a href="/news-list.html">中心动态</a></li>
+            <li><a href="/news-list.html">行业动态</a></li>
+        </ul>
+    </div>
+    <div class="__section">
+        <div class="__cata-name">研究项目与成果</div>
+        <ul>
+            <li><a href="/research.html">研究项目</a></li>
+            <li><a href="/research-cg.html">研究成果</a></li>
+        </ul>
+    </div>
+    <div class="__section">
+        <div class="__cata-name">专家学者</div>
+        <ul>
+            <li><a href="/scholar.html">教授</a></li>
+            <li><a href="/scholar-1.html">荣誉教授</a></li>
+            <li><a href="/scholar-2.html">客座教授</a></li>
+        </ul>
+    </div>
+    <div class="__section">
+        <div class="__cata-name">学术活动</div>
+        <ul>
+            <li><a href="/exchange.html">未来交通论坛</a></li>
+        </ul>
+    </div>
+    <div class="__section">
+        <div class="__cata-name">学友风采</div>
+        <ul>
+            <li><a href="/schoolfellow.html">学友风采</a></li>
+        </ul>
+    </div>
+    <div class="__section">
+        <div class="__cata-name">联系方式</div>
+        <ul>
+            <li><a href="/contact.html">联系方式</a></li>
+        </ul>
+    </div>
+    <div class="__section show-xs">
+        <ul><li><a href="#"><i class="iconfont icon-earth"></i> browse English site ></a></li></ul>
+    </div>
+</div>
+
+{% if showFriendLinks %}
+    <div class="friend-link">
+        <div class="__title">友情链接</div>
+        <div class="__cata-name">友情链接</div>
+        <ul>
+            <li><a href="#">清华大学</a></li>
+            <li><a href="#">清华大学土木工程系</a></li>
+        </ul>
+    </div>
+{% endif %}
+
+<div class="footer__contact">
+    <div class="footer-brand">
+        <div class="footer-logo"><img src="{% static 'website/images/footer--logo.png' %}" alt=""></div>
+        <div class="__name-txt"><img src="{% static 'website/images/footer--name.png' %}" alt=""></div>
+    </div>
+    <div class="__contact-msg">
+        <div>
+            <span>地址：</span>
+            <span>北京市海淀区清华大学水力实验馆312室</span>
+        </div>
+        <div>
+            <span>联系人：</span>
+            <span>刘老师</span>
+        </div>
+    </div>
+    <div class="__contact-msg">
+        <div>
+            <span>电话：</span>
+            <span><a href="tel:8888844">010-62797229</a></span>
+        </div>
+        <div>
+            <span>邮箱：</span>
+            <span><a href="mailto:888@22.com">lzui@tsinghua.edu.cn</a></span>
+        </div>
+    </div>
+
+    <div class="qr">
+        <img src="{% static 'website/images/qr.png' %}" alt="">
+        <br>
+        <div>微信公众号</div>
+    </div>
+</div>
+
+<div class="copy">
+    &copy;2020 清华大学-剑桥大学-麻省理工学院低碳能源大学联盟未来交通研究中心。<!--a class="auth" href="#">绚思科技提供技术支持</a -->
+</div>

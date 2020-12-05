@@ -1,0 +1,22 @@
+<div class="nav-box">
+    <div class="brand"><img src="{% static 'website/logo.png' %}" alt=""></div>
+
+    <ul class="nav">
+        <li><a href="{% url 'website:index' %}">首页</a></li>
+        <li>
+            <span>关于中心</span>
+            <ul>
+                <li><a href="{% url 'website:about' page_name='us' %}">中心简介</a></li>
+                <li><a href="{% url 'website:about' page_name='alliance' %}">联盟大学</a></li>
+                <li><a href="{% url 'website:about' page_name='course' %}">发展历程</a></li>
+                <li><a href="{% url 'website:about' page_name='honor' %}">中心荣誉</a></li>
+            </ul>
+        </li>
+        <li><a href="{% url 'website:news' %}">新闻动态</a></li>
+        <li><a href="{% url 'website:research' %}">研究项目与成果</a></li>
+        <li><a href="{% url 'website:scholar' %}">专家学者</a></li>
+        <li><a href="{% url 'website:exchange' exchange_name='a' %}">学术活动</a></li>
+        <li><a href="{% url 'website:schoolfellow' %}">学友风采</a></li>
+        <li><a href="{% url 'website:contact' %}">联系方式</a></li>
+    </ul>
+</div>
