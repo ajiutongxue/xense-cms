@@ -1,0 +1,9 @@
+{% extends 'website/layout.html' %}
+
+{% block body-block %}
+    <h1>common list</h1>
+    {% for a in context.articles %}
+        <a href="{{ a.get_absolute_url }}">{{ a.title }}</a>
+    {% endfor %}
+
+{% endblock %}

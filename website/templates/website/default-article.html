@@ -2,8 +2,9 @@
 
 {% block main-wrapper %}
     <div class="single-post">
+    <h1>{{ context.article.id }}-{{ context.article.title }}</h1>
         <div class="__post-text">
-            {{ context_data.page.content | safe }}
+            {{ context.article.content | safe }}
         </div>
     </div>
 {% endblock %}

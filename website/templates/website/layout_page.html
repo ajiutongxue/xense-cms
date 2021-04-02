@@ -22,7 +22,11 @@
                                 {% else %}
                             <li>
                         {% endif %}
-                    <a href="{% url context_data.url_base page_name=item.slug %}">{{ item.title }}</a>
+                        {% if item.slug == 'contact' %}
+                            <a href="{% url context_data.url_base %}">{{ item.title }}</a>
+                        {% else %}
+                            <a href="{% url context_data.url_base page_name=item.slug %}">{{ item.title }}</a>
+                        {% endif %}
                     </li>
                     {% endfor %}
                 </ul>
@@ -50,7 +54,11 @@
                                     {% else %}
                                 <li>
                             {% endif %}
-                        <a href="{% url context_data.url_base page_name=item.slug %}">{{ item.title }}</a>
+                            {% if item.slug == 'contact' %}
+                                <a href="{% url context_data.url_base %}">{{ item.title }}</a>
+                            {% else %}
+                                <a href="{% url context_data.url_base page_name=item.slug %}">{{ item.title }}</a>
+                            {% endif %}
                         </li>
                         {% endfor %}
                     </ul>
