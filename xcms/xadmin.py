@@ -1,6 +1,6 @@
 # from django.contrib import admin
 import xadmin
-from website.models import Category, Article, Post, ActivityPost, Alumni, Staff, SinglePage
+from website.models import Category, Articles, Post, ActivityPost, Alumni, Staff, SinglePage
 
 
 # Register your models here.
@@ -11,8 +11,8 @@ class CategoryAdmin(object):
     list_display = ['rank_num', 'cate_name', 'slug', 'parent_cate']
 
 
-# class ArticleAdmin(admin.ModelAdmin):
-class ArticleAdmin(object):
+# class ArticlesAdmin(admin.ModelAdmin):
+class ArticlesAdmin(object):
     list_display = ['id', 'title', 'slug', 'category', 'rank_num', ]
     fields = ('title', 'slug', 'rank_num')
     prepopulated_fields = {'slug': ('title',)}
@@ -50,7 +50,7 @@ class SinglePageAdmin(object):
 
 
 xadmin.site.register(Category, CategoryAdmin)
-xadmin.site.register(Article, ArticleAdmin)
+xadmin.site.register(Articles, ArticlesAdmin)
 xadmin.site.register(Post, PostAdmin)
 xadmin.site.register(ActivityPost, ActivityPostAdmin)
 xadmin.site.register(Alumni, AlumniAdmin)

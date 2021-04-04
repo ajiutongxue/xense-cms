@@ -9,23 +9,22 @@
         <img src="{% static 'website/upload/tmp-img/focus-2.jpg' %}" alt="">
     </div>
 {% endblock %}
-
 {% block single-page-body %}
     <div class="main-container">
         <div class="side-box">
             {% block side-box %}
-                <div class="side-title">{{ context_data.page.category.cate_name }}</div>
+                <div class="side-title">{{ context.page.category.cate_name }}</div>
                 <ul class="side-nav-list">
-                    {% for item in context_data.sub_cate_list %}
-                        {% if context_data.page.slug == item.slug %}
+                    {% for item in context.brother_cate_list %}
+                        {% if context.page.slug == item.slug %}
                             <li class="selected">
                                 {% else %}
                             <li>
                         {% endif %}
                         {% if item.slug == 'contact' %}
-                            <a href="{% url context_data.url_base %}">{{ item.title }}</a>
+                            <a href="{% url context.url_base %}">{{ item.title }}</a>
                         {% else %}
-                            <a href="{% url context_data.url_base page_name=item.slug %}">{{ item.title }}</a>
+                            <a href="{% url context.url_base slug=item.slug %}">{{ item.title }}</a>
                         {% endif %}
                     </li>
                     {% endfor %}
@@ -38,26 +37,26 @@
                 <div class="dir-path">
                     <a href="{% url 'website:index' %}">首页</a>
                     <span>&gt;</span>
-                    {% if not context_data.parent_link is None %}
-                        <a href="{% url context_data.parent_link %}">{{ context_data.page.category.cate_name }}</a>
+                    {% if not context.parent_link is None %}
+                        <a href="{% url context.parent_link %}">{{ context.page.category.cate_name }}</a>
                         <span>&gt;</span>
                     {% endif %}
-                    <span>{{ context_data.page.title }}</span>
+                    <span>{{ context.page.title }}</span>
                 </div>
-                <div class="__title">{{ context_data.page.title }}</div>
+                <div class="__title">{{ context.page.title }}</div>
                 <div id="select-menu" class="category-select-menu">
-                    <div class="__name">{{ context_data.page.category.cate_name }} <i class="iconfont icon-caret-down"></i></div>
+                    <div class="__name">{{ context.page.category.cate_name }} <i class="iconfont icon-caret-down"></i></div>
                     <ul class="__list">
-                        {% for item in context_data.sub_cate_list %}
-                            {% if context_data.page.slug == item.slug %}
+                        {% for item in context.brother_cate_list %}
+                            {% if context.page.slug == item.slug %}
                                 <li class="selected">
                                     {% else %}
                                 <li>
                             {% endif %}
                             {% if item.slug == 'contact' %}
-                                <a href="{% url context_data.url_base %}">{{ item.title }}</a>
+                                <a href="{% url context.url_base %}">{{ item.title }}</a>
                             {% else %}
-                                <a href="{% url context_data.url_base page_name=item.slug %}">{{ item.title }}</a>
+                                <a href="{% url context.url_base slug=item.slug %}">{{ item.title }}</a>
                             {% endif %}
                         </li>
                         {% endfor %}
@@ -71,7 +70,6 @@
         </div>
     </div>
 {% endblock %}
-
 
 {% block js-block %}
     <script>

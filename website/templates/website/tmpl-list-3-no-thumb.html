@@ -1,0 +1,117 @@
+{% extends 'website/layout.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'website/css/page.css' %}">
+{% endblock %}
+
+{% block face-block %}
+    <div class="top-face">
+        <img src="{% static 'website/upload/tmp-img/focus-2.jpg' %}" alt="">
+    </div>
+{% endblock %}
+
+{% block body-block %}
+    <div class="main-container">
+    <div class="side-box">
+        {% block side-box %}
+        <div class="side-title">{{ context.cate.parent_name }}</div>
+        <ul class="side-nav-list">
+            {% for item in context.brother_cate_list %}
+                {% if context.cate.full_name == item.full_name %}
+                    <li class="selected">
+                {% else %}
+                    <li>
+                {% endif %}
+                <a href="{{ item.get_absolute_url }}">{{ item.cate_name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endblock %}
+    </div>
+
+    <div class="main-wrapper">
+        <div class="page-title-box">
+            <div class="dir-path">
+                <a href="{% url 'website:index' %}">首页</a>
+                <span>&gt;</span>
+                {% if context.cate.slug != context.cate.full_name %}
+                    <a href="{{ context.brother_cate_list.first.get_absolute_url }}">{{ context.cate.parent_name }}</a>
+                    <span>&gt;</span>
+                {% endif %}
+                <span>{{ context.cate.cate_name }}</span>
+            </div>
+            <div class="__title">{{ context.cate.cate_name }}</div>
+            <div id="select-menu" class="category-select-menu">
+                <div class="__name">{{ context.cate.cate_name }} <i class="iconfont icon-caret-down"></i></div>
+                    <ul class="__list">
+                        {% for item in context.brother_cate_list %}
+                            {% if context.cate.full_name == item.full_name %}
+                                <li class="selected">
+                            {% else %}
+                                <li>
+                            {% endif %}
+                            <a href="{{ item.get_absolute_url }}">{{ item.cate_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+            </div>
+        </div>
+
+
+        {% block main-wrapper %}
+
+        <div class="news__thumbnail-list">
+        {% for item in context.articles %}
+            <div class="__item">
+                <div class="__title">
+                    <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+                </div>
+                <div class="__remark">{{ item.summary }}</div>
+            </div>
+        {% endfor %}
+        </div>
+
+        {% if context.count_all_page > 1 %}
+            <div class="pagination">
+                <ul>
+                    {% if context.prev_num != 0 %}
+                        <li><a href="{% url 'website:list_page' parent_cate=context.parent_cate cate_slug=context.cate.slug page_num=context.prev_num %}">&lt; 上一页</a></li>
+                    {% else %}
+                        <li class="disabled"><a href="javascript:;">&lt; 上一页</a></li>
+                    {% endif %}
+
+                {% for i in context.num_list %}
+                    {% if i == context.page_num %}
+                        <li class="current"><a href="javascript:;">{{ i }}</a></li>
+                    {% else %}
+                        <li><a href="{% url 'website:list_page' parent_cate=context.parent_cate cate_slug=context.cate.slug page_num=i %}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                    {% if context.next_num != 0 %}
+                        <li><a href="{% url 'website:list_page' parent_cate=context.parent_cate cate_slug=context.cate.slug page_num=context.next_num %}">下一页 &gt; </a></li>
+                    {% else %}
+                        <li class="disabled"><a href="javascript:;">下一页 &gt; </a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
+        {% endblock %}
+    </div>
+</div>
+
+
+{#    <h1>common list</h1>#}
+{#    {% for a in context.articles %}#}
+{#        <a href="{{ a.get_absolute_url }}">{{ a.title }}</a>#}
+{#    {% endfor %}#}
+
+{% endblock %}
+
+{% block js-block %}
+    <script>
+        $('#select-menu .__name').on('click', function () {
+            $('#select-menu .__list').slideToggle(100);
+        })
+
+    </script>
+{% endblock %}

@@ -1,9 +1,11 @@
+{# 默认单页文章模版，"关于我们" 使用 #}
+
 {% extends 'website/layout_page.html' %}
 
 {% block main-wrapper %}
     <div class="single-post">
         <div class="__post-text">
-            {{ context_data.page.content | safe }}
+            {{ context.page.content | safe }}
         </div>
     </div>
 {% endblock %}

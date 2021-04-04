@@ -6,10 +6,10 @@
         <li>
             <span>关于中心</span>
             <ul>
-                <li><a href="{% url 'website:about' page_name='us' %}">中心简介</a></li>
-                <li><a href="{% url 'website:about' page_name='alliance' %}">联盟大学</a></li>
-                <li><a href="{% url 'website:about' page_name='course' %}">发展历程</a></li>
-                <li><a href="{% url 'website:about' page_name='honor' %}">中心荣誉</a></li>
+                <li><a href="{% url 'website:about' slug='introduction' %}">中心简介</a></li>
+                <li><a href="{% url 'website:about' slug='alliance' %}">联盟大学</a></li>
+                <li><a href="{% url 'website:about' slug='course' %}">发展历程</a></li>
+                <li><a href="{% url 'website:about' slug='honor' %}">中心荣誉</a></li>
             </ul>
         </li>
         <li><a href="{% url 'website:news' %}">新闻动态</a></li>

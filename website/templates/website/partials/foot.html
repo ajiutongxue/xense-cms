@@ -3,51 +3,63 @@
     <div class="__section">
         <div class="__cata-name">关于中心</div>
         <ul>
-            <li><a href="/about-us.html">中心简介</a></li>
-            <li><a href="/about-lm.html">联盟大学</a></li>
-            <li><a href="/about-dsj.html">大事记</a></li>
-            <li><a href="/about-honor.html">中心荣誉</a></li>
+            <li><a href="{% url 'website:about' slug='introduction' %}">中心简介</a></li>
+            <li><a href="{% url 'website:about' slug='partners' %}">合作伙伴</a></li>
+            <li><a href="{% url 'website:about' slug='chronicle_of_events' %}">大事记</a></li>
+            <li><a href="{% url 'website:about' slug='honors' %}">中心荣誉</a></li>
         </ul>
     </div>
 
     <div class="__section">
         <div class="__cata-name">新闻动态</div>
         <ul>
-            <li><a href="/news-list.html">中心动态</a></li>
-            <li><a href="/news-list.html">行业动态</a></li>
-        </ul>
-    </div>
-    <div class="__section">
-        <div class="__cata-name">研究项目与成果</div>
-        <ul>
-            <li><a href="/research.html">研究项目</a></li>
-            <li><a href="/research-cg.html">研究成果</a></li>
-        </ul>
-    </div>
-    <div class="__section">
-        <div class="__cata-name">专家学者</div>
-        <ul>
-            <li><a href="/scholar.html">教授</a></li>
-            <li><a href="/scholar-1.html">荣誉教授</a></li>
-            <li><a href="/scholar-2.html">客座教授</a></li>
+            <li><a href="{% url 'website:list_page_index' parent_cate='news' cate_slug='tcmftc_news' %}">中心动态</a></li>
+            <li><a href="{% url 'website:list_page_index' parent_cate='news' cate_slug='industry_news' %}">行业动态</a></li>
         </ul>
     </div>
     <div class="__section">
         <div class="__cata-name">学术活动</div>
         <ul>
-            <li><a href="/exchange.html">未来交通论坛</a></li>
+            <li><a href="{% url 'website:list_page_index' parent_cate='activities' cate_slug='academic_activities' %}">学术活动</a></li>
         </ul>
     </div>
     <div class="__section">
+        <div class="__cata-name">科学研究</div>
+        <ul>
+            <li><a href="{% url 'website:list_page_index' parent_cate='research' cate_slug='platform' %}">研究平台</a></li>
+            <li><a href="{% url 'website:list_page_index' parent_cate='research' cate_slug='projects' %}">研究项目</a></li>
+            <li><a href="{% url 'website:list_page_index' parent_cate='research' cate_slug='co-operation_with_Industry' %}">成果转化</a></li>
+        </ul>
+    </div>
+    <div class="__section">
+        <div class="__cata-name">成果奖励</div>
+        <ul>
+            <li><a href="{% url 'website:list_page_index' parent_cate='achievements' cate_slug='articles' %}">科学论文</a></li>
+            <li><a href="{% url 'website:list_page_index' parent_cate='achievements' cate_slug='patents' %}">发明专利</a></li>
+            <li><a href="{% url 'website:list_page_index' parent_cate='achievements' cate_slug='honors_and_awards' %}">荣誉奖励</a></li>
+        </ul>
+    </div>
+    <div class="__section">
+        <div class="__cata-name">师资力量</div>
+        <ul>
+            <li><a href="{% url 'website:list_page_index' parent_cate='staff' cate_slug='faculty' %}">教师</a></li>
+            <li><a href="{% url 'website:list_page_index' parent_cate='staff' cate_slug='postgraduates' %}">研究生</a></li>
+            <li><a href="{% url 'website:list_page_index' parent_cate='staff' cate_slug='visiting_professors' %}">访问教授</a></li>
+            <li><a href="{% url 'website:list_page_index' parent_cate='staff' cate_slug='distinguished_experts' %}">特聘专家</a></li>
+            <li><a href="{% url 'website:list_page_index' parent_cate='staff' cate_slug='visiting_students' %}">访问学生</a></li>
+        </ul>
+    </div>
+
+    <div class="__section">
         <div class="__cata-name">学友风采</div>
         <ul>
-            <li><a href="/schoolfellow.html">学友风采</a></li>
+            <li><a href="{% url 'website:list_page_index' parent_cate='alumni' cate_slug='alumni' %}">学友风采</a></li>
         </ul>
     </div>
     <div class="__section">
         <div class="__cata-name">联系方式</div>
         <ul>
-            <li><a href="/contact.html">联系方式</a></li>
+            <li><a href="{% url 'website:contact' %}">联系方式</a></li>
         </ul>
     </div>
     <div class="__section show-xs">
@@ -55,13 +67,15 @@
     </div>
 </div>
 
-{% if showFriendLinks %}
+{% if context.friend_links %}
     <div class="friend-link">
         <div class="__title">友情链接</div>
         <div class="__cata-name">友情链接</div>
         <ul>
-            <li><a href="#">清华大学</a></li>
-            <li><a href="#">清华大学土木工程系</a></li>
+            {% for fl in context.friend_links %}
+                <li><a href="{{ fl.url }}" target="_blank">{{ fl.title }}</a></li>
+            {% endfor %}
+
         </ul>
     </div>
 {% endif %}
@@ -74,31 +88,33 @@
     <div class="__contact-msg">
         <div>
             <span>地址：</span>
-            <span>北京市海淀区清华大学水力实验馆312室</span>
+            <span>{{ context.zh_site_info.addr }}</span>
         </div>
         <div>
             <span>联系人：</span>
-            <span>刘老师</span>
+            <span>{{ context.zh_site_info.linkman }}</span>
         </div>
     </div>
     <div class="__contact-msg">
         <div>
             <span>电话：</span>
-            <span><a href="tel:8888844">010-62797229</a></span>
+            <span><a href="tel:{{ context.zh_site_info.tel }}">{{ context.zh_site_info.tel }}</a></span>
         </div>
         <div>
             <span>邮箱：</span>
-            <span><a href="mailto:888@22.com">lzui@tsinghua.edu.cn</a></span>
+            <span><a href="{{ context.zh_site_info.email }}">{{ context.zh_site_info.email }}</a></span>
         </div>
     </div>
 
+    {% if context.zh_site_info.qr %}
     <div class="qr">
-        <img src="{% static 'website/images/qr.png' %}" alt="">
+        <img src="{{ context.zh_site_info.qr.url }}" alt="">
         <br>
         <div>微信公众号</div>
     </div>
+    {% endif %}
 </div>
 
 <div class="copy">
-    &copy;2020 清华大学-剑桥大学-麻省理工学院低碳能源大学联盟未来交通研究中心。<!--a class="auth" href="#">绚思科技提供技术支持</a -->
+    {{ context.zh_site_info.copy }} <!--a class="auth" href="#">绚思科技提供技术支持</a -->
 </div>

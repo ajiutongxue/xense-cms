@@ -133,7 +133,20 @@ USE_L10N = True
 USE_TZ = True
 
 
+# 邮件发送配置
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sina.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'xensestudio@sina.com'
+EMAIL_HOST_PASSWORD = '7322a16129b08234'
+EMAIL_FORM = EMAIL_HOST_USER
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+# upload setting
+
+MEDIA_URL = '/uploads/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')

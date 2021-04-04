@@ -5,47 +5,58 @@
     </div>
     <div class="nav">
         <div class="nav__links">
-            <a href="{% url 'website:about' page_name='contact' %}"><i class="iconfont icon-comment"></i>联系方式</a>
+            <a href="{% url 'website:contact' %}"><i class="iconfont icon-comment"></i>联系方式</a>
             <span class="__divider"></span>
-            <a href="#"><i class="iconfont icon-earth"></i>English</a>
+            <a href="http://wljt.en.xense.com.cn/"><i class="iconfont icon-earth"></i>English</a>
         </div>
         <div id="navbar" class="navbar">
             <ul>
                 <li><a href="{% url 'website:index' %}">首页</a></li>
                 <li>
-                    <a href="{% url 'website:about' page_name='us' %}">关于中心<i class="iconfont icon-caret-down"></i></a>
+                    <a href="{% url 'website:about' slug='introduction' %}">关于中心<i class="iconfont icon-caret-down"></i></a>
                     <div class="sub-nav">
-                        <a href="{% url 'website:about' page_name='us' %}">中心简介</a>
-                        <a href="{% url 'website:about' page_name='alliance' %}">联盟大学</a>
-{#                        todo: admin 中把发展历程改为 大事记 event#}
-                        <a href="{% url 'website:about' page_name='event' %}">大事记</a>
-                        <a href="{% url 'website:about' page_name='honor' %}">中心荣誉</a>
+                        <a href="{% url 'website:about' slug='introduction' %}">中心简介</a>
+                        <a href="{% url 'website:about' slug='partners' %}">合作伙伴</a>
+                        <a href="{% url 'website:about' slug='chronicle_of_events' %}">大事记</a>
+                        <a href="{% url 'website:about' slug='honors' %}">中心荣誉</a>
                     </div>
                 </li>
                 <li>
-                    <a href="{% url 'website:list_page_index' list_name='news' %}">新闻动态<i class="iconfont icon-caret-down"></i></a>
+                    <a href="{% url 'website:list_page_index' parent_cate='news' cate_slug='tcmftc_news' %}">新闻动态<i class="iconfont icon-caret-down"></i></a>
                     <div class="sub-nav">
-                        <a href="{% url 'website:list_page_index' list_name='news' %}">中心动态</a>
-                        <a href="{% url 'website:list_page_index' list_name='news' %}">行业动态</a>
+                        <a href="{% url 'website:list_page_index' parent_cate='news' cate_slug='tcmftc_news' %}">中心动态</a>
+                        <a href="{% url 'website:list_page_index' parent_cate='news' cate_slug='industry_news' %}">行业动态</a>
+                    </div>
+                </li>
+                <li><a href="{% url 'website:list_page_index' parent_cate='activities' cate_slug='academic_activities' %}">学术活动</a></li>
+                <li>
+                    <a href="{% url 'website:list_page_index' parent_cate='research' cate_slug='platform' %}">科学研究<i class="iconfont icon-caret-down"></i></a>
+                    <div class="sub-nav">
+                        <a href="{% url 'website:list_page_index' parent_cate='research' cate_slug='platform' %}">研究平台</a>
+                        <a href="{% url 'website:list_page_index' parent_cate='research' cate_slug='projects' %}">研究项目</a>
+                        <a href="{% url 'website:list_page_index' parent_cate='research' cate_slug='co-operation_with_Industry' %}">成果转化</a>
                     </div>
                 </li>
                 <li>
-                    <a href="{% url 'website:research' %}">研究项目与成果<i class="iconfont icon-caret-down"></i></a>
+                    <a href="{% url 'website:list_page_index' parent_cate='achievements' cate_slug='articles' %}">成果奖励<i class="iconfont icon-caret-down"></i></a>
                     <div class="sub-nav">
-                        <a href="{% url 'website:research' %}">研究项目</a>
-                        <a href="{% url 'website:achievement' %}">研究成果</a>
+                        <a href="{% url 'website:list_page_index' parent_cate='achievements' cate_slug='articles' %}">科学论文</a>
+                        <a href="{% url 'website:list_page_index' parent_cate='achievements' cate_slug='patents' %}">发明专利</a>
+                        <a href="{% url 'website:list_page_index' parent_cate='achievements' cate_slug='honors_and_awards' %}">荣誉奖励</a>
                     </div>
                 </li>
+
                 <li>
-                    <a href="{% url 'website:schoolfellow' %}">专家学者<i class="iconfont icon-caret-down"></i></a>
+                    <a href="{% url 'website:list_page_index' parent_cate='staff' cate_slug='faculty' %}">师资力量<i class="iconfont icon-caret-down"></i></a>
                     <div class="sub-nav">
-                        <a href="{% url 'website:schoolfellow' %}">教授</a>
-                        <a href="{% url 'website:schoolfellow' %}">荣誉教授</a>
-                        <a href="{% url 'website:schoolfellow' %}">客座教授</a>
+                        <a href="{% url 'website:list_page_index' parent_cate='staff' cate_slug='faculty' %}">教师</a>
+                        <a href="{% url 'website:list_page_index' parent_cate='staff' cate_slug='postgraduates' %}">研究生</a>
+                        <a href="{% url 'website:list_page_index' parent_cate='staff' cate_slug='visiting_professors' %}">访问教授</a>
+                        <a href="{% url 'website:list_page_index' parent_cate='staff' cate_slug='distinguished_experts' %}">特聘专家</a>
+                        <a href="{% url 'website:list_page_index' parent_cate='staff' cate_slug='visiting_students' %}">访问学生</a>
                     </div>
                 </li>
-                <li><a href="{% url 'website:exchange' exchange_name='a' %}">学术活动</a></li>
-                <li><a href="{% url 'website:schoolfellow' %}">学友风采</a></li>
+                <li><a href="{% url 'website:list_page_index' parent_cate='alumni' cate_slug='alumni' %}">学友风采</a></li>
             </ul>
         </div>
     </div>
@@ -56,44 +67,53 @@
         </div>
         <div id="hb-nav__list" class="hb-nav__list">
             <div class="__group">
-                <div class="__title"><a href="/index.html">首页</a></div>
+                <div class="__title"><a href="{% url 'website:index' %}">首页</a></div>
             </div>
             <div class="__group">
-                <div class="__title"><a href="/about-us.html">关于中心</a></div>
-                <div class="__item"><a href="/about-us.html">中心简介</a></div>
-                <div class="__item"><a href="/about-lm.html">联盟大学</a></div>
-                <div class="__item"><a href="/about-dsj.html">大事记</a></div>
-                <div class="__item"><a href="/about-honor.html">中心荣誉</a></div>
+                <div class="__title"><a href="{% url 'website:about' slug='introduction' %}">关于中心</a></div>
+                <div class="__item"><a href="{% url 'website:about' slug='introduction' %}">中心简介</a></div>
+                <div class="__item"><a href="{% url 'website:about' slug='partners' %}">合作伙伴</a></div>
+                <div class="__item"><a href="{% url 'website:about' slug='chronicle_of_events' %}">大事记</a></div>
+                <div class="__item"><a href="{% url 'website:about' slug='honors' %}">中心荣誉</a></div>
             </div>
             <div class="__group">
-                <div class="__title"><a href="/news-list.html">新闻动态</a></div>
-                <div class="__item"><a href="/news.html">中心动态</a></div>
-                <div class="__item"><a href="/news.html">行业动态</a></div>
+                <div class="__title"><a href="{% url 'website:list_page_index' parent_cate='news' cate_slug='tcmftc_news' %}">新闻动态</a></div>
+                <div class="__item"><a href="{% url 'website:list_page_index' parent_cate='news' cate_slug='tcmftc_news' %}">中心动态</a></div>
+                <div class="__item"><a href="{% url 'website:list_page_index' parent_cate='news' cate_slug='industry_news' %}">行业动态</a></div>
             </div>
             <div class="__group">
-                <div class="__title"><a href="/research.html">研究项目与成果</a></div>
-                <div class="__item"><a href="/research.html">研究项目</a></div>
-                <div class="__item"><a href="/research-cg.html">研究成果</a></div>
+                <div class="__title"><a href="{% url 'website:list_page_index' parent_cate='activities' cate_slug='academic_activities' %}">学术活动</a></div>
             </div>
             <div class="__group">
-                <div class="__title"><a href="/scholar.html">专家学者</a></div>
-                <div class="__item"><a href="/scholar.html">教授</a></div>
-                <div class="__item"><a href="/scholar-1.html">荣誉教授</a></div>
-                <div class="__item"><a href="/scholar-2.html">客座教授</a></div>
+                <div class="__title"><a href="{% url 'website:list_page_index' parent_cate='research' cate_slug='platform' %}">科学研究</a></div>
+                <div class="__item"><a href="{% url 'website:list_page_index' parent_cate='research' cate_slug='platform' %}">研究平台</a></div>
+                <div class="__item"><a href="{% url 'website:list_page_index' parent_cate='research' cate_slug='projects' %}">研究项目</a></div>
+                <div class="__item"><a href="{% url 'website:list_page_index' parent_cate='research' cate_slug='co-operation_with_Industry' %}">成果转化</a></div>
             </div>
             <div class="__group">
-                <div class="__title"><a href="/exchange.html">学术活动</a></div>
+                <div class="__title"><a href="{% url 'website:list_page_index' parent_cate='achievements' cate_slug='articles' %}">成果奖励</a></div>
+                <div class="__item"><a href="{% url 'website:list_page_index' parent_cate='achievements' cate_slug='articles' %}">科学论文</a></div>
+                <div class="__item"><a href="{% url 'website:list_page_index' parent_cate='achievements' cate_slug='patents' %}">发明专利</a></div>
+                <div class="__item"><a href="{% url 'website:list_page_index' parent_cate='achievements' cate_slug='honors_and_awards' %}">荣誉奖励</a></div>
             </div>
             <div class="__group">
-                <div class="__title"><a href="/schoolfellow.html">学友风采</a></div>
+                <div class="__title"><a href="{% url 'website:list_page_index' parent_cate='staff' cate_slug='faculty' %}">师资力量</a></div>
+                <div class="__item"><a href="{% url 'website:list_page_index' parent_cate='staff' cate_slug='faculty' %}">教师</a></div>
+                <div class="__item"><a href="{% url 'website:list_page_index' parent_cate='staff' cate_slug='postgraduates' %}">研究生</a></div>
+                <div class="__item"><a href="{% url 'website:list_page_index' parent_cate='staff' cate_slug='visiting_professors' %}">访问教授</a></div>
+                <div class="__item"><a href="{% url 'website:list_page_index' parent_cate='staff' cate_slug='distinguished_experts' %}">特聘专家</a></div>
+                <div class="__item"><a href="{% url 'website:list_page_index' parent_cate='staff' cate_slug='visiting_students' %}">访问学生</a></div>
             </div>
             <div class="__group">
-                <div class="__title"><a href="/contact.html">联系我们</a></div>
+                <div class="__title"><a href="{% url 'website:list_page_index' parent_cate='alumni' cate_slug='alumni' %}">学友风采</a></div>
             </div>
-{#            <div class="__divider"></div>#}
+            <div class="__group">
+                <div class="__title"><a href="{% url 'website:contact' %}">联系方式</a></div>
+            </div>
             <div class="__group __lang">
-                <div class="__title"><a href="#"><i class="iconfont icon-earth"></i>browse English site</a></div>
+                <div class="__title"><a href="http://wljt.en.xense.com.cn/"><i class="iconfont icon-earth"></i>browse English site</a></div>
             </div>
         </div>
     </div>
 </div>
+

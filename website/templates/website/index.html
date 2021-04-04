@@ -1,7 +1,166 @@
 {% extends 'website/layout.html' %}
 
-{% block head %}{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'website/css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'website/js/owlcarousel/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'website/js/owlcarousel/owl.theme.css' %}">
+{% endblock %}
 
-{% block body %}
-    <h1>index</h1>
+{% block face-block %}
+<div class="slider-box">
+    <div id="case-list-focus" class="owl-carousel">
+        {% for focus in context.focus_list %}
+        <div class="slider-item">
+            <div class="__txt">
+                <h2>
+                    {% if focus.url %}
+                        <a href="{{ focus.url }}" target="_blank">
+                    {% else %}
+                        <a href="#">
+                    {% endif %}
+                    {{ focus.title }}</a>
+                </h2>
+                <div>{{ focus.content }}</div>
+            </div>
+            {% if focus.focus_img %}
+                <img src="{{ focus.focus_img.url }}" alt="">
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    <span class="__prev-btn"><i class="iconfont icon-chevron-left"></i></span>
+    <span class="__next-btn"><i class="iconfont icon-chevron-right"></i></span>
+</div>
+{% endblock %}
+
+{% block body-block %}
+<div class="index-main-container">
+    <div class="index__section-activity">
+        <div class="active-list">
+            <div class="__title">学术活动 <span class="__divider"></span><a href="{% url 'website:list_page_index' parent_cate='activities' cate_slug='academic_activities' %}">查看更多</a></div>
+            <div class="__list">
+                {% for activity in context.activities %}
+                    <div class="__active-item">
+                        <a class="__link" href="{{ activity.get_absolute_url }}" target="_blank">
+                            {% if activity.thumbnail %}
+                                <img src="{{ activity.thumbnail.url }}" alt="">
+                            {% else %}
+                                <img src="{% static 'website/images/thumb-holder-300x180.jpg' %}" alt="">
+                            {% endif %}
+                            <div class="__item-title">{{ activity.title }}</div>
+                            <span class="__item-time">{{ activity.pub_date }}</span>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="active-calendar">
+            <div class="__title">活动日历</div>
+            <div class="__calendar-wrapper">
+                {% for c in context.calendars %}
+                <div class="__active-item">
+                    <div class="__date">
+                        <div class="__month">{{ c.month }}</div>
+                        <div class="__day">{{ c.day }}</div>
+                    </div>
+                    <div class="__active-name">
+                        {% if c.url %}
+                            <a href="{{ c.url }}">{{ c.title }}</a>
+                        {% else %}
+                            <a>{{ c.title }}</a>
+                        {% endif %}
+                    </div>
+                    <div class="__summary">{{ c.introduce }}</div>
+                    <div class="__detail-info">
+                        <div><i class="iconfont icon-time-circle"></i> {{ c.active_time }}</div>
+                        <div><i class="iconfont icon-location"></i> {{ c.addr }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            <div class="__active-item"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="index__section-study">
+        <div class="__list-wrap">
+            <div class="__title">科学研究 <span class="__divider"></span><a href="{% url 'website:list_page_index' parent_cate='research' cate_slug='platform' %}">查看更多</a></div>
+            <div class="__list">
+                {% for r in context.research_list %}
+                <div class="__item">
+                    <a href="{{ r.get_absolute_url }}">
+                        <div class="__img-box">
+                            {% if activity.thumbnail %}
+                                <img src="{{ activity.thumbnail.url }}" alt="">
+                            {% else %}
+                                <img src="{% static 'website/images/thumb-holder-300x180.jpg' %}" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="__link-txt">{{ r.title }}</div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="index__section-study index__section-honor">
+        <div class="__list-wrap">
+            <div class="__title">成果奖励 <span class="__divider"></span><a href="{% url 'website:list_page_index' parent_cate='achievements' cate_slug='honors_and_awards' %}">查看更多</a></div>
+            <div class="__list">
+                {% for h in context.honor_list %}
+                    {% if h.thumbnail %}
+                    <div class="__item">
+                        <a href="{% url 'website:list_page_index' parent_cate='achievements' cate_slug='honors_and_awards' %}">
+                            <div class="__img-box"><img src="{{ h.thumbnail.url }}" alt=""></div>
+                        </a>
+                    </div>
+                    {% endif %}
+
+                {% endfor %}
+
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
+
+
+{% block js-block %}
+    <script src="{% static 'website/js/owlcarousel/owl.carousel.js' %}"></script>
+
+<script>
+
+    const owl = $('#case-list-focus').owlCarousel({
+        items: 1,
+        autoplay:true,
+        autoplayTimeout:3500,
+        autoplayHoverPause:true,
+        //animateOut: 'fadeOut',
+        loop: true,
+        // nav:true,
+        margin: 10,
+        smartSpeed: 450,
+        lazyLoad: true,
+        // merge: true,
+        // video: true,
+        responsive:{
+        }
+
+    });
+
+    $('.__prev-btn').on('click', () => {
+        owl.trigger('prev', [300])
+    });
+
+    $('.__next-btn').on('click', () => {
+        owl.trigger('next', [300])
+    });
+
+</script>
 {% endblock %}

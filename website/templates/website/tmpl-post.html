@@ -1,0 +1,58 @@
+{% extends 'website/layout.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'website/css/page.css' %}">
+{% endblock %}
+
+{% block body-block %}
+    <div class="detail-container">
+        <div class="detail-content-wrapper" style="flex: 1">
+            <div class="page-title-box">
+                <div class="dir-path">
+                    <a href="{% url 'website:index' %}">首页</a>
+                    <span>&gt;</span>
+                    <a href="{{ context.article.category.get_absolute_url }}">{{ context.article.category.cate_name }}</a>
+                    <span>&gt;</span>
+                    <span>{{ context.article.title }}</span>
+                </div>
+                <div class="__title">{{ context.article.title }}</div>
+                <div class="__info">
+                    <span class="__time">{{ context.article.pub_date }}</span>
+                    <span class="__auth">{{ context.article.writer }}</span>
+                </div>
+            </div>
+            <div class="detail-body">
+                <div class="__share-tools">
+                    <div class="bshare-custom">
+                        <a title="分享到微信" class="bshare-weixin">微信</a>
+                        <div class="__divider"></div>
+                        <a title="分享到QQ空间" class="bshare-qzone">QQ空间</a>
+                        <div class="__divider"></div>
+                        <a title="分享到新浪微博" class="bshare-sinaminiblog">微博</a>
+                        <div class="__divider"></div>
+                        <a title="分享到QQ好友" class="bshare-qqim">QQ好友</a>
+                        <div class="__divider"></div>
+                        <a title="分享到人人网" class="bshare-renren">人人网</a>
+    {#                    <a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>#}
+                    </div>
+                </div>
+                <div class="detail-text">
+                    {{ context.article.content | safe }}
+                </div>
+            </div>
+        </div>
+        <div class="detail-side-box">
+            <div class="__title">相关推荐</div>
+            <ul>
+                {% for item in context.relative_list %}
+                    <li><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js-block %}
+    <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=3&amp;lang=zh"></script>
+    <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+{% endblock %}
