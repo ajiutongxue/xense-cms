@@ -245,7 +245,7 @@
   padding-top: 6px;
   max-height: 47px;
   overflow: hidden;
- min-height: 2.4em;
+  min-height: 2.4em;
 }
 .active-calendar .__active-item .__summary {
   clear: both;

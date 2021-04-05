@@ -1,0 +1,51 @@
+{% extends 'website_en/layout_page.html' %}
+
+{% block main-wrapper %}
+<div class="contact-container" style="display: flex;">
+    <div class="send-msg-box">
+        <div class="__warpper">
+            {% if context.send_ok %}
+                <h1 style="font-weight: normal; text-align: center; line-height: 4em;">发送成功!</h1>
+            {% else %}
+                <form id="send-msg" action="{% url 'website_en:contact_sendmail' %}" method="post">
+                    {% csrf_token %}
+                    <div class="__title">留言板</div>
+                    <div class="__label">主题</div>
+                    <div class="__row"><input id="title" name="title" type="text"></div>
+                    <div class="__label">分类</div>
+                    <div class="__row">
+                        <select name="cate">
+                            <option value="1">合作交流</option>
+                            <option value="2">意见建议</option>
+                        </select>
+                    </div>
+                    <div class="__label">如何称呼</div>
+                    <div class="__row"><input name="uname" type="text"></div>
+                    <div class="__label">联系方式</div>
+                    <div class="__row"><input id="tel" name="tel" type="text"></div>
+                    <div class="__label">正文</div>
+                    <div class="__row"><textarea id="content" name="content" cols="30" rows="10"></textarea></div>
+
+                    <div class="__submit"><a onclick="fire()">发送</a></div>
+                </form>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="__contact-msg">
+        {{ context.page.content | safe }}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js-block %}
+    <script>
+        function fire() {
+
+            document.getElementById('send-msg').submit()
+        }
+
+    </script>
+{% endblock %}

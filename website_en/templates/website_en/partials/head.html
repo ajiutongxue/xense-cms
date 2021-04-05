@@ -1,0 +1,119 @@
+<div id="header" class="header">
+    <div class="brand">
+        <a href="{% url 'website_en:index' %}"><img class="hide-xs" src="{% static 'website/images/logo1.png' %}" alt=""></a>
+        <a href="{% url 'website_en:index' %}"><img class="show-xs" src="{% static 'website/images/logo-s.png' %}" alt=""></a>
+    </div>
+    <div class="nav">
+        <div class="nav__links">
+            <a href="{% url 'website_en:contact' %}"><i class="iconfont icon-comment"></i>Contact</a>
+            <span class="__divider"></span>
+            <a href="{% url 'website:index' %}"><i class="iconfont icon-earth"></i>中文</a>
+        </div>
+        <div id="navbar" class="navbar">
+            <ul>
+                <li><a href="{% url 'website_en:index' %}">Home</a></li>
+                <li>
+                    <a href="{% url 'website_en:about' slug='introduction' %}">About Us<i class="iconfont icon-caret-down"></i></a>
+                    <div class="sub-nav">
+                        <a href="{% url 'website_en:about' slug='introduction' %}">Introduction</a>
+                        <a href="{% url 'website_en:about' slug='partners' %}">Partners</a>
+                        <a href="{% url 'website_en:about' slug='chronicle_of_events' %}">Chronicle of events</a>
+                        <a href="{% url 'website_en:about' slug='honors' %}">Honors</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="{% url 'website_en:list_page_index' parent_cate='news' cate_slug='tcmftc_news' %}">News<i class="iconfont icon-caret-down"></i></a>
+                    <div class="sub-nav">
+                        <a href="{% url 'website_en:list_page_index' parent_cate='news' cate_slug='tcmftc_news' %}">TCMFTC news</a>
+                        <a href="{% url 'website_en:list_page_index' parent_cate='news' cate_slug='industry_news' %}">Industry news</a>
+                    </div>
+                </li>
+                <li><a href="{% url 'website_en:list_page_index' parent_cate='activities' cate_slug='academic_activities' %}">Activities</a></li>
+                <li>
+                    <a href="{% url 'website_en:list_page_index' parent_cate='research' cate_slug='platform' %}">Research<i class="iconfont icon-caret-down"></i></a>
+                    <div class="sub-nav">
+                        <a href="{% url 'website_en:list_page_index' parent_cate='research' cate_slug='platform' %}">Platform</a>
+                        <a href="{% url 'website_en:list_page_index' parent_cate='research' cate_slug='projects' %}">Projects</a>
+                        <a href="{% url 'website_en:list_page_index' parent_cate='research' cate_slug='co-operation_with_Industry' %}">Co-operation with Industry</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="{% url 'website_en:list_page_index' parent_cate='achievements' cate_slug='articles' %}">Achievements<i class="iconfont icon-caret-down"></i></a>
+                    <div class="sub-nav">
+                        <a href="{% url 'website_en:list_page_index' parent_cate='achievements' cate_slug='articles' %}">Articles</a>
+                        <a href="{% url 'website_en:list_page_index' parent_cate='achievements' cate_slug='patents' %}">Patents</a>
+                        <a href="{% url 'website_en:list_page_index' parent_cate='achievements' cate_slug='honors_and_awards' %}">Honors & Awards</a>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="{% url 'website_en:list_page_index' parent_cate='staff' cate_slug='faculty' %}">Staff & Student<i class="iconfont icon-caret-down"></i></a>
+                    <div class="sub-nav">
+                        <a href="{% url 'website_en:list_page_index' parent_cate='staff' cate_slug='faculty' %}">Faculty</a>
+                        <a href="{% url 'website_en:list_page_index' parent_cate='staff' cate_slug='postgraduates' %}">Postgraduates</a>
+                        <a href="{% url 'website_en:list_page_index' parent_cate='staff' cate_slug='visiting_professors' %}">Visiting Professors</a>
+                        <a href="{% url 'website_en:list_page_index' parent_cate='staff' cate_slug='distinguished_experts' %}">Distinguished Experts</a>
+                        <a href="{% url 'website_en:list_page_index' parent_cate='staff' cate_slug='visiting_students' %}">Visiting Students</a>
+                    </div>
+                </li>
+                <li><a href="{% url 'website_en:list_page_index' parent_cate='alumni' cate_slug='alumni' %}">Alumni</a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="hb-nav" class="hb-nav">
+
+        <div id="hb-bars" class="hb-bars">
+            <i class="iconfont icon-menu"></i>
+        </div>
+        <div id="hb-nav__list" class="hb-nav__list">
+            <div class="__group">
+                <div class="__title"><a href="{% url 'website_en:index' %}">Home</a></div>
+            </div>
+            <div class="__group">
+                <div class="__title"><a href="{% url 'website_en:about' slug='introduction' %}">About Us</a></div>
+                <div class="__item"><a href="{% url 'website_en:about' slug='introduction' %}">Introduction</a></div>
+                <div class="__item"><a href="{% url 'website_en:about' slug='partners' %}">Partners</a></div>
+                <div class="__item"><a href="{% url 'website_en:about' slug='chronicle_of_events' %}">Chronicle of events</a></div>
+                <div class="__item"><a href="{% url 'website_en:about' slug='honors' %}">Honors</a></div>
+            </div>
+            <div class="__group">
+                <div class="__title"><a href="{% url 'website_en:list_page_index' parent_cate='news' cate_slug='tcmftc_news' %}">News</a></div>
+                <div class="__item"><a href="{% url 'website_en:list_page_index' parent_cate='news' cate_slug='tcmftc_news' %}">TCMFTC news</a></div>
+                <div class="__item"><a href="{% url 'website_en:list_page_index' parent_cate='news' cate_slug='industry_news' %}">Industry news</a></div>
+            </div>
+            <div class="__group">
+                <div class="__title"><a href="{% url 'website_en:list_page_index' parent_cate='activities' cate_slug='academic_activities' %}">Activities</a></div>
+            </div>
+            <div class="__group">
+                <div class="__title"><a href="{% url 'website_en:list_page_index' parent_cate='research' cate_slug='platform' %}">Research</a></div>
+                <div class="__item"><a href="{% url 'website_en:list_page_index' parent_cate='research' cate_slug='platform' %}">Platform</a></div>
+                <div class="__item"><a href="{% url 'website_en:list_page_index' parent_cate='research' cate_slug='projects' %}">Projects</a></div>
+                <div class="__item"><a href="{% url 'website_en:list_page_index' parent_cate='research' cate_slug='co-operation_with_Industry' %}">Co-operation with Industry</a></div>
+            </div>
+            <div class="__group">
+                <div class="__title"><a href="{% url 'website_en:list_page_index' parent_cate='achievements' cate_slug='articles' %}">Achievements</a></div>
+                <div class="__item"><a href="{% url 'website_en:list_page_index' parent_cate='achievements' cate_slug='articles' %}">Articles</a></div>
+                <div class="__item"><a href="{% url 'website_en:list_page_index' parent_cate='achievements' cate_slug='patents' %}">Patents</a></div>
+                <div class="__item"><a href="{% url 'website_en:list_page_index' parent_cate='achievements' cate_slug='honors_and_awards' %}">Honors & Awards</a></div>
+            </div>
+            <div class="__group">
+                <div class="__title"><a href="{% url 'website_en:list_page_index' parent_cate='staff' cate_slug='faculty' %}">Staff & Student</a></div>
+                <div class="__item"><a href="{% url 'website_en:list_page_index' parent_cate='staff' cate_slug='faculty' %}">Faculty</a></div>
+                <div class="__item"><a href="{% url 'website_en:list_page_index' parent_cate='staff' cate_slug='postgraduates' %}">Postgraduates</a></div>
+                <div class="__item"><a href="{% url 'website_en:list_page_index' parent_cate='staff' cate_slug='visiting_professors' %}">Visiting Professors</a></div>
+                <div class="__item"><a href="{% url 'website_en:list_page_index' parent_cate='staff' cate_slug='distinguished_experts' %}">Distinguished Experts</a></div>
+                <div class="__item"><a href="{% url 'website_en:list_page_index' parent_cate='staff' cate_slug='visiting_students' %}">Visiting Students</a></div>
+            </div>
+            <div class="__group">
+                <div class="__title"><a href="{% url 'website_en:list_page_index' parent_cate='alumni' cate_slug='alumni' %}">Alumni</a></div>
+            </div>
+            <div class="__group">
+                <div class="__title"><a href="{% url 'website_en:contact' %}">Contact</a></div>
+            </div>
+            <div class="__group __lang">
+                <div class="__title"><a href="{% url 'website:index' %}"><i class="iconfont icon-earth"></i>浏览中文站点</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+

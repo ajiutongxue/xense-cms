@@ -1,0 +1,10 @@
+{% extends 'website_en/layout_page.html' %}
+
+{% block main-wrapper %}
+    <div class="single-post">
+    <h1>{{ context.article.id }}-{{ context.article.title }}</h1>
+        <div class="__post-text">
+            {{ context.article.content | safe }}
+        </div>
+    </div>
+{% endblock %}

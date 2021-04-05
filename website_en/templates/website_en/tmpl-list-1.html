@@ -1,7 +1,7 @@
-{% extends 'website/layout.html' %}
+{% extends 'website_en/layout.html' %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'website/css/page.css' %}">
+    <link rel="stylesheet" href="{% static 'website_en/css/page.css' %}">
 {% endblock %}
 
 {% block face-block %}
@@ -22,7 +22,7 @@
                 {% else %}
                     <li>
                 {% endif %}
-                <a href="{{ item.get_absolute_url }}">{{ item.cate_name }}</a>
+                <a href="{% url 'website_en:list_page_index' parent_cate=context.parent_cate cate_slug=item.slug %}">{{ item.cate_name }}</a>
             </li>
             {% endfor %}
         </ul>
@@ -32,10 +32,11 @@
     <div class="main-wrapper">
         <div class="page-title-box">
             <div class="dir-path">
-                <a href="{% url 'website:index' %}">首页</a>
+                <a href="{% url 'website_en:index' %}">Home</a>
                 <span>&gt;</span>
                 {% if context.cate.slug != context.cate.full_name %}
-                    <a href="{{ context.brother_cate_list.first.get_absolute_url }}">{{ context.cate.parent_name }}</a>
+                    <a href="{% url 'website_en:list_page_index' parent_cate=context.parent_cate cate_slug=context.brother_cate_list.first.slug %}">{{ context.cate.parent_name }}</a>
+{#                    <a href="{{ context.brother_cate_list.first.get_absolute_url }}">{{ context.cate.parent_name }}</a>#}
                     <span>&gt;</span>
                 {% endif %}
                 <span>{{ context.cate.cate_name }}</span>
@@ -50,7 +51,8 @@
                             {% else %}
                                 <li>
                             {% endif %}
-                            <a href="{{ item.get_absolute_url }}">{{ item.cate_name }}</a></li>
+                            <a href="{% url 'website_en:list_page_index' parent_cate=context.parent_cate cate_slug=item.slug %}">{{ item.cate_name }}</a></li>
+{#                            <a href="{{ item.get_absolute_url }}">{{ item.cate_name }}</a></li>#}
                         {% endfor %}
                     </ul>
             </div>
@@ -71,47 +73,16 @@
                 <div class="__title">
                     <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
                 </div>
-                <div class="__time">{{ item.pub_date|date:'Y-m-d' }}</div>
+                <div class="__time">{{ item.pub_date }}</div>
             </div>
         {% endfor %}
         </div>
 
-        {% if context.count_all_page > 1 %}
-            <div class="pagination">
-                <ul>
-                    {% if context.prev_num != 0 %}
-                        <li><a href="{% url 'website:list_page' parent_cate=context.parent_cate cate_slug=context.cate.slug page_num=context.prev_num %}">&lt; 上一页</a></li>
-                    {% else %}
-                        <li class="disabled"><a href="javascript:;">&lt; 上一页</a></li>
-                    {% endif %}
-
-                {% for i in context.num_list %}
-                    {% if i == context.page_num %}
-                        <li class="current"><a href="javascript:;">{{ i }}</a></li>
-                    {% else %}
-                        <li><a href="{% url 'website:list_page' parent_cate=context.parent_cate cate_slug=context.cate.slug page_num=i %}">{{ i }}</a></li>
-                    {% endif %}
-                {% endfor %}
-
-                    {% if context.next_num != 0 %}
-                        <li><a href="{% url 'website:list_page' parent_cate=context.parent_cate cate_slug=context.cate.slug page_num=context.next_num %}">下一页 &gt; </a></li>
-                    {% else %}
-                        <li class="disabled"><a href="javascript:;">下一页 &gt; </a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        {% endif %}
-
+        {% include 'website_en/partials/pagination.html' %}
 
         {% endblock %}
     </div>
 </div>
-
-
-{#    <h1>common list</h1>#}
-{#    {% for a in context.articles %}#}
-{#        <a href="{{ a.get_absolute_url }}">{{ a.title }}</a>#}
-{#    {% endfor %}#}
 
 {% endblock %}
 

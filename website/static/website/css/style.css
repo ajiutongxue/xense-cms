@@ -377,7 +377,8 @@ th {
   padding-left: 60px;
 }
 .footer__contact .__contact-msg div {
-  line-height: 2em;
+  line-height: 1.2em;
+  margin: .8em 0;
 }
 .footer__contact .qr {
   flex: 1 1 auto;

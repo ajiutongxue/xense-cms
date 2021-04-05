@@ -2,7 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.urls import reverse
 from xcms.storage import ImageStorage
-
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # Create your models here.
 
@@ -19,7 +20,8 @@ class AbsPost(models.Model):
     thumbnail = models.ImageField(upload_to='post_thumbnail', storage=ImageStorage(), null=True,
                                   help_text='图片尺寸：300x150', blank=True, verbose_name='缩略图')
     summary = models.TextField(max_length=150, verbose_name='摘要', null=True, blank=True, help_text='中文字数 50 个左右较好')
-    content = models.TextField(blank=True, null=True, verbose_name='正文')
+    # content = models.TextField(blank=True, null=True, verbose_name='正文')
+    content = RichTextUploadingField(verbose_name='正文')
     writer = models.CharField(default='未来交通研究中心', max_length=20, verbose_name='来源')
     pub_date = models.DateField(default=timezone.now, verbose_name='发布时间')
     update_date = models.DateTimeField(auto_now_add=True, verbose_name='更新时间')
@@ -62,12 +64,14 @@ class Category(models.Model):
     只有如此，才能对每个分类进行数据上的设置，比如顶上的图、列表用的模板等
     """
     id = models.AutoField(primary_key=True)
+    lang = models.CharField(default='zh', max_length=20, verbose_name='语言版本', choices=(
+        ('en', '英语 English'),
+        ('zh', '中文 Chinese')
+    ))
     # parent_cate = models.ForeignKey('self', verbose_name='上级栏目', on_delete=None, blank=True, null=True)
     parent_name = models.CharField(max_length=100, verbose_name='上级栏目名称', blank=True, null=True)
-    parent_name_en = models.CharField(max_length=100, verbose_name='上级栏目名称 en', blank=True, null=True)
     # 栏目名称是表示这个单独的页面属于哪个栏目：关于我们、专家学者等等
     cate_name = models.CharField(max_length=100, verbose_name='栏目名称', blank=True, null=True)
-    cate_name_en = models.CharField(max_length=100, verbose_name='栏目名称 en', blank=True, null=True)
     full_name = models.CharField(max_length=100, verbose_name='栏目英文全名', blank=False, null=False)
     # 该字段将描述地址中当前页面的上一级
     # e.g. xense.com/about/us
@@ -76,9 +80,6 @@ class Category(models.Model):
     title = models.CharField(max_length=100, verbose_name='seo 标题', blank=True, null=True)
     keyword = models.CharField(max_length=100, verbose_name='seo 关键字', blank=True, null=True)
     description = models.CharField(max_length=300, verbose_name='seo 描述', blank=True, null=True)
-    title_en = models.CharField(max_length=100, verbose_name='seo 标题 en', blank=True, null=True)
-    keyword_en = models.CharField(max_length=100, verbose_name='seo 关键字 en', blank=True, null=True)
-    description_en = models.CharField(max_length=300, verbose_name='seo 描述 en', blank=True, null=True)
     # poster = models.ImageField(upload_to='cate_poster', null=True, verbose_name='顶部大图')
     page_count = models.IntegerField(default=20, verbose_name='每页文章条数')
     rank_num = models.IntegerField(default=1, verbose_name='排序')
@@ -111,13 +112,26 @@ class Category(models.Model):
         verbose_name_plural = '栏目列表'
 
     def __str__(self):
-        parent_name = ''
-        if self.parent_name is not None:
-            parent_cate = '[' + self.parent_name + '] '
-        return '{0}{1} | {2} | {3}'.format(parent_name, self.cate_name, self.slug, self.full_name)
+        return '{} ({})'.format(self.cate_name, self.full_name)
+        # parent_name = ''
+        # if self.parent_name is not None:
+        #     parent_cate = '[' + self.parent_name + '] '
+        # return '{0}{1} | {2} | {3}'.format(parent_name, self.cate_name, self.slug, self.full_name)
 
 
 class SimplePost(models.Model):
+    category = models.ForeignKey(Category, verbose_name='栏目', on_delete=None, blank=False, null=False)
+    id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=200, verbose_name='标题', blank=False, null=True)
+    url = models.CharField(max_length=100, verbose_name='链接', blank=True, null=True)
+    msg1 = models.CharField(max_length=100, verbose_name='信息1', help_text='显示在右侧的信息，需要填入完整显示内容，如："委托方：清华大学" ',
+                            blank=True, null=True)
+    msg2 = models.CharField(max_length=100, verbose_name='信息2', help_text='显示在右侧的信息，需要填入完整显示内容', blank=True, null=True)
+    is_published = models.BooleanField(default=True, verbose_name='是否发布')
+    rank_num = models.IntegerField(default=1, verbose_name='排序')
+
+
+class SimplePost_en(models.Model):
     category = models.ForeignKey(Category, verbose_name='栏目', on_delete=None, blank=False, null=False)
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200, verbose_name='标题', blank=False, null=True)
@@ -133,6 +147,13 @@ class Links(SimplePost):
     class Meta:
         verbose_name = '友情链接'
         verbose_name_plural = '友情链接'
+        proxy = True
+
+
+class Links_en(SimplePost_en):
+    class Meta:
+        verbose_name = '友情链接_en'
+        verbose_name_plural = '友情链接_en'
         proxy = True
 
 
@@ -154,6 +175,24 @@ class Gallery(models.Model):
         verbose_name_plural = '荣誉奖励'
 
 
+class Gallery_en(models.Model):
+    category = models.ForeignKey(Category, verbose_name='栏目', on_delete=None, blank=False, null=False)
+    id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=200, verbose_name='标题', blank=True, null=True)
+    url = models.CharField(max_length=100, verbose_name='链接', blank=True, null=True)
+    msg = models.CharField(max_length=200, verbose_name='信息', blank=True, null=True)
+    thumbnail = models.ImageField(upload_to='gallery_thumbnail', storage=ImageStorage(), null=True,
+                                  help_text='建议图片尺寸：300x180', blank=True, verbose_name='缩略图')
+    big_pic = models.ImageField(upload_to='gallery_thumbnail', storage=ImageStorage(), null=True, blank=True,
+                                verbose_name='图片')
+    is_published = models.BooleanField(default=True, verbose_name='是否发布')
+    rank_num = models.IntegerField(default=1, verbose_name='排序')
+
+    class Meta:
+        verbose_name = '荣誉奖励_en'
+        verbose_name_plural = '荣誉奖励_en'
+
+
 class Post(AbsPost):
     category = models.ForeignKey(Category, verbose_name='栏目', on_delete=None, blank=False, null=False)
 
@@ -169,6 +208,22 @@ class Post(AbsPost):
         verbose_name_plural = '文章'
 
 
+class Post_en(AbsPost):
+    category = models.ForeignKey(Category, verbose_name='栏目', on_delete=None, blank=False, null=False)
+    writer = models.CharField(default='TCMFTC', max_length=20, verbose_name='来源')
+
+    def get_absolute_url(self):
+        parent_slug = self.category.full_name.split('-')[0]
+        return reverse(
+            'website_en:article',
+            args=[parent_slug, self.category.slug, self.id, self.slug if self.slug else '0']
+        )
+
+    class Meta:
+        verbose_name = '文章_en'
+        verbose_name_plural = '文章_en'
+
+
 class SinglePage(Post):
     """
     关于我们、联系方式
@@ -177,6 +232,17 @@ class SinglePage(Post):
     class Meta:
         verbose_name = '单独页面'
         verbose_name_plural = '单独页面'
+        proxy = True
+
+
+class SinglePage_en(Post_en):
+    """
+    关于我们、联系方式
+    """
+
+    class Meta:
+        verbose_name = '单独页面_en'
+        verbose_name_plural = '单独页面_en'
         proxy = True
 
 
@@ -192,8 +258,10 @@ class Staff(models.Model):
     title2 = models.CharField(max_length=100, verbose_name='职位2', blank=True, null=True)
     slug = models.CharField(max_length=200, null=False, verbose_name='url 优化', blank=True)
     thumbnail = models.ImageField(upload_to='staff_thumbnail', blank=True, verbose_name='照片', help_text='图片：320 x 400')
-    introduce = models.TextField(max_length=300, verbose_name='简介', null=True, blank=True)
-    content = models.TextField(blank=True, null=True, verbose_name='正文')
+    introduce = RichTextField(verbose_name='简介', null=True, blank=True)
+    # introduce = models.TextField(max_length=300, verbose_name='简介', null=True, blank=True)
+    # content = models.TextField(verbose_name='正文', blank=True, null=True)
+    content = RichTextUploadingField(verbose_name='正文', blank=True, null=True)
     rank_num = models.IntegerField(default=1, verbose_name='排序')
     is_published = models.BooleanField(default=True, verbose_name='是否发布')
 
@@ -201,6 +269,31 @@ class Staff(models.Model):
         ordering = ['-rank_num']
         verbose_name = '师资力量'
         verbose_name_plural = '师资力量'
+
+
+class Staff_en(models.Model):
+    """
+    职员档案 en
+    """
+    id = models.AutoField(primary_key=True)
+    category = models.ForeignKey(Category, verbose_name='栏目', on_delete=None, blank=False, null=False)
+    name = models.CharField(max_length=60, verbose_name='姓名', blank=True, null=True)
+    title = models.CharField(max_length=100, verbose_name='职位', blank=True, null=True)
+    title1 = models.CharField(max_length=100, verbose_name='职位1', blank=True, null=True)
+    title2 = models.CharField(max_length=100, verbose_name='职位2', blank=True, null=True)
+    slug = models.CharField(max_length=200, null=False, verbose_name='url 优化', blank=True)
+    thumbnail = models.ImageField(upload_to='staff_thumbnail', blank=True, verbose_name='照片', help_text='图片：320 x 400')
+    introduce = RichTextField(verbose_name='简介', null=True, blank=True)
+    # introduce = models.TextField(max_length=300, verbose_name='简介', null=True, blank=True)
+    # content = models.TextField(verbose_name='正文', blank=True, null=True)
+    content = RichTextUploadingField(verbose_name='正文', blank=True, null=True)
+    rank_num = models.IntegerField(default=1, verbose_name='排序')
+    is_published = models.BooleanField(default=True, verbose_name='是否发布')
+
+    class Meta:
+        ordering = ['-rank_num']
+        verbose_name = '师资力量_en'
+        verbose_name_plural = '师资力量_en'
 
 
 class SiteInfo(models.Model):
@@ -238,9 +331,13 @@ class Calendar(models.Model):
     活动日历
     """
     id = models.AutoField(primary_key=True)
+    lang = models.CharField(max_length=20, verbose_name='语言版本', choices=(
+        ('en', '英语 English'),
+        ('zh', '中文 Chinese')
+    ))
     title = models.CharField(max_length=100, verbose_name='标题', blank=True, null=True)
     active_time = models.DateTimeField(verbose_name='活动时间', blank=True, null=True)
-    month = models.CharField(max_length=10, verbose_name='月简写', blank=False, help_text='如：Jnm.')
+    month = models.CharField(max_length=10, verbose_name='月简写', blank=False, help_text='如：Jun.')
     addr = models.CharField(max_length=100, verbose_name='活动地点', blank=False)
     day = models.IntegerField(verbose_name='日', blank=False)
     url = models.CharField(max_length=100, verbose_name='链接到', blank=True, null=True)
@@ -255,6 +352,10 @@ class Calendar(models.Model):
 
 
 class Focus(models.Model):
+    lang = models.CharField(max_length=20, verbose_name='语言版本', choices=(
+        ('en', '英语 English'),
+        ('zh', '中文 Chinese')
+    ))
     title = models.CharField(max_length=100, verbose_name='标题')
     content = models.TextField(null=True, verbose_name='摘要')
     rank_num = models.IntegerField(default=1, verbose_name='排序', help_text='数字大的在前面')
@@ -264,15 +365,22 @@ class Focus(models.Model):
                                   help_text='尺寸：1600 x 560')
 
     class Meta:
-        ordering = ['-is_published', '-rank_num']
-        verbose_name = '焦点图'
-        verbose_name_plural = '焦点图列表'
+        ordering = ['-is_published', 'lang', '-rank_num']
+        verbose_name = '幻灯片'
+        verbose_name_plural = '幻灯片列表'
 
 
 class News(Post):
     class Meta:
         verbose_name = '新闻'
         verbose_name_plural = '新闻'
+        proxy = True
+
+
+class News_en(Post_en):
+    class Meta:
+        verbose_name = '新闻_en'
+        verbose_name_plural = '新闻_en'
         proxy = True
 
 
@@ -290,10 +398,31 @@ class IndNews(Post):
         proxy = True
 
 
+class TCMFTCNews_en(Post_en):
+    class Meta:
+        verbose_name = '中心动态_en'
+        verbose_name_plural = '中心动态_en'
+        proxy = True
+
+
+class IndNews_en(Post_en):
+    class Meta:
+        verbose_name = '行业动态_en'
+        verbose_name_plural = '行业动态_en'
+        proxy = True
+
+
 class Activity(Post):
     class Meta:
         verbose_name = '学术活动'
         verbose_name_plural = '学术活动'
+        proxy = True
+
+
+class Activity_en(Post_en):
+    class Meta:
+        verbose_name = '学术活动_en'
+        verbose_name_plural = '学术活动_en'
         proxy = True
 
 
@@ -304,10 +433,24 @@ class Platform(Post):
         proxy = True
 
 
+class Platform_en(Post_en):
+    class Meta:
+        verbose_name = '研究平台_en'
+        verbose_name_plural = '研究平台_en'
+        proxy = True
+
+
 class Projects(SimplePost):
     class Meta:
         verbose_name = '研究项目'
         verbose_name_plural = '研究项目'
+        proxy = True
+
+
+class Projects_en(SimplePost_en):
+    class Meta:
+        verbose_name = '研究项目_en'
+        verbose_name_plural = '研究项目_en'
         proxy = True
 
 
@@ -318,10 +461,24 @@ class Achievement(Post):
         proxy = True
 
 
+class Achievement_en(Post_en):
+    class Meta:
+        verbose_name = '成果转化_en'
+        verbose_name_plural = '成果转化_en'
+        proxy = True
+
+
 class Articles(SimplePost):
     class Meta:
         verbose_name = '科学论文'
         verbose_name_plural = '科学论文'
+        proxy = True
+
+
+class Articles_en(SimplePost_en):
+    class Meta:
+        verbose_name = '科学论文_en'
+        verbose_name_plural = '科学论文_en'
         proxy = True
 
 
@@ -332,10 +489,24 @@ class Patents(SimplePost):
         proxy = True
 
 
+class Patents_en(SimplePost_en):
+    class Meta:
+        verbose_name = '发明专利_en'
+        verbose_name_plural = '发明专利_en'
+        proxy = True
+
+
 class StaffFaculty(Staff):
     class Meta:
         verbose_name = '教师'
         verbose_name_plural = '教师'
+        proxy = True
+
+
+class StaffFaculty_en(Staff_en):
+    class Meta:
+        verbose_name = '教师_en'
+        verbose_name_plural = '教师_en'
         proxy = True
 
 
@@ -346,10 +517,24 @@ class StaffPostgraduates(Staff):
         proxy = True
 
 
+class StaffPostgraduates_en(Staff_en):
+    class Meta:
+        verbose_name = '研究生_en'
+        verbose_name_plural = '研究生_en'
+        proxy = True
+
+
 class StaffProfessors(Staff):
     class Meta:
         verbose_name = '访问教授'
         verbose_name_plural = '访问教授'
+        proxy = True
+
+
+class StaffProfessors_en(Staff_en):
+    class Meta:
+        verbose_name = '访问教授_en'
+        verbose_name_plural = '访问教授_en'
         proxy = True
 
 
@@ -360,6 +545,13 @@ class StaffExperts(Staff):
         proxy = True
 
 
+class StaffExperts_en(Staff_en):
+    class Meta:
+        verbose_name = '特聘专家_en'
+        verbose_name_plural = '特聘专家_en'
+        proxy = True
+
+
 class StaffStudents(Staff):
     class Meta:
         verbose_name = '访问学生'
@@ -367,8 +559,22 @@ class StaffStudents(Staff):
         proxy = True
 
 
+class StaffStudents_en(Staff_en):
+    class Meta:
+        verbose_name = '访问学生_en'
+        verbose_name_plural = '访问学生_en'
+        proxy = True
+
+
 class Alumni(Post):
     class Meta:
         verbose_name = '学友风采'
         verbose_name_plural = '学友风采'
+        proxy = True
+
+
+class Alumni_en(Post_en):
+    class Meta:
+        verbose_name = '学友风采_en'
+        verbose_name_plural = '学友风采_en'
         proxy = True

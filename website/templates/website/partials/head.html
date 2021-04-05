@@ -1,13 +1,13 @@
 <div id="header" class="header">
     <div class="brand">
-        <img class="hide-xs" src="{% static 'website/images/logo1.png' %}" alt="">
-        <img class="show-xs" src="{% static 'website/images/logo-s.png' %}" alt="">
+        <a href="{% url 'website:index' %}"><img class="hide-xs" src="{% static 'website/images/logo1.png' %}" alt=""></a>
+        <a href="{% url 'website:index' %}"><img class="show-xs" src="{% static 'website/images/logo-s.png' %}" alt=""></a>
     </div>
     <div class="nav">
         <div class="nav__links">
             <a href="{% url 'website:contact' %}"><i class="iconfont icon-comment"></i>联系方式</a>
             <span class="__divider"></span>
-            <a href="http://wljt.en.xense.com.cn/"><i class="iconfont icon-earth"></i>English</a>
+            <a href="{% url 'website_en:index' %}"><i class="iconfont icon-earth"></i>English</a>
         </div>
         <div id="navbar" class="navbar">
             <ul>
@@ -111,7 +111,7 @@
                 <div class="__title"><a href="{% url 'website:contact' %}">联系方式</a></div>
             </div>
             <div class="__group __lang">
-                <div class="__title"><a href="http://wljt.en.xense.com.cn/"><i class="iconfont icon-earth"></i>browse English site</a></div>
+                <div class="__title"><a href="{% url 'website_en:index' %}"><i class="iconfont icon-earth"></i>browse English site</a></div>
             </div>
         </div>
     </div>

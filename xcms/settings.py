@@ -45,7 +45,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'reversion',
     'website.apps.WebsiteConfig',
-
+    'website_en.apps.WebsiteEnConfig',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -122,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'zh-Hans'
+LANGUAGE_CODE = 'zh-CN'
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -150,3 +152,4 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/uploads/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+CKEDITOR_UPLOAD_PATH = 'upload/'

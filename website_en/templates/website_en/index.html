@@ -1,7 +1,7 @@
-{% extends 'website/layout.html' %}
+{% extends 'website_en/layout.html' %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'website/css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'website_en/css/index.css' %}">
     <link rel="stylesheet" href="{% static 'website/js/owlcarousel/owl.carousel.css' %}">
     <link rel="stylesheet" href="{% static 'website/js/owlcarousel/owl.theme.css' %}">
 {% endblock %}
@@ -37,10 +37,11 @@
 <div class="index-main-container">
     <div class="index__section-activity">
         <div class="active-list">
-            <div class="__title">学术活动 <span class="__divider"></span><a href="{% url 'website:list_page_index' parent_cate='activities' cate_slug='academic_activities' %}">查看更多</a></div>
+            <div class="__title">Activities <span class="__divider"></span><a href="{% url 'website_en:list_page_index' parent_cate='activities' cate_slug='academic_activities' %}">more</a></div>
             <div class="__list">
                 {% for activity in context.activities %}
                     <div class="__active-item">
+{#                     path('<parent_cate>/<cate_slug>/<pid>/<slug>/', views.article, name='article'),#}
                         <a class="__link" href="{{ activity.get_absolute_url }}" target="_blank">
                             {% if activity.thumbnail %}
                                 <img src="{{ activity.thumbnail.url }}" alt="">
@@ -48,7 +49,7 @@
                                 <img src="{% static 'website/images/thumb-holder-300x180.jpg' %}" alt="">
                             {% endif %}
                             <div class="__item-title">{{ activity.title }}</div>
-                            <span class="__item-time">{{ activity.pub_date|date:'Y-m-d' }}</span>
+                            <span class="__item-time">{{ activity.pub_date }}</span>
                         </a>
                     </div>
                 {% endfor %}
@@ -56,7 +57,7 @@
         </div>
 
         <div class="active-calendar">
-            <div class="__title">活动日历</div>
+            <div class="__title">Events Calendar</div>
             <div class="__calendar-wrapper">
                 {% for c in context.calendars %}
                 <div class="__active-item">
@@ -73,7 +74,7 @@
                     </div>
                     <div class="__summary">{{ c.introduce }}</div>
                     <div class="__detail-info">
-                        <div><i class="iconfont icon-time-circle"></i> {{ c.active_time|date:'Y-m-d H:i:s' }}</div>
+                        <div><i class="iconfont icon-time-circle"></i> {{ c.active_time }}</div>
                         <div><i class="iconfont icon-location"></i> {{ c.addr }}</div>
                     </div>
                 </div>
@@ -85,7 +86,7 @@
 
     <div class="index__section-study">
         <div class="__list-wrap">
-            <div class="__title">科学研究 <span class="__divider"></span><a href="{% url 'website:list_page_index' parent_cate='research' cate_slug='platform' %}">查看更多</a></div>
+            <div class="__title">Research <span class="__divider"></span><a href="{% url 'website_en:list_page_index' parent_cate='research' cate_slug='platform' %}">more</a></div>
             <div class="__list">
                 {% for r in context.research_list %}
                 <div class="__item">
@@ -108,12 +109,12 @@
 
     <div class="index__section-study index__section-honor">
         <div class="__list-wrap">
-            <div class="__title">成果奖励 <span class="__divider"></span><a href="{% url 'website:list_page_index' parent_cate='achievements' cate_slug='honors_and_awards' %}">查看更多</a></div>
+            <div class="__title">Achievements <span class="__divider"></span><a href="{% url 'website_en:list_page_index' parent_cate='achievements' cate_slug='honors_and_awards' %}">more</a></div>
             <div class="__list">
                 {% for h in context.honor_list %}
                     {% if h.thumbnail %}
                     <div class="__item">
-                        <a href="{% url 'website:list_page_index' parent_cate='achievements' cate_slug='honors_and_awards' %}">
+                        <a href="{% url 'website_en:list_page_index' parent_cate='achievements' cate_slug='honors_and_awards' %}">
                             <div class="__img-box"><img src="{{ h.thumbnail.url }}" alt=""></div>
                         </a>
                     </div>

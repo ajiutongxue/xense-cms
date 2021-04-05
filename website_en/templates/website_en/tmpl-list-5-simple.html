@@ -1,0 +1,103 @@
+{% extends 'website_en/layout.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'website_en/css/page.css' %}">
+{% endblock %}
+
+{% block face-block %}
+    <div class="top-face">
+        <img src="{% static 'website/upload/tmp-img/focus-2.jpg' %}" alt="">
+    </div>
+{% endblock %}
+
+{% block body-block %}
+    <div class="main-container">
+    <div class="side-box">
+        {% block side-box %}
+        <div class="side-title">{{ context.cate.parent_name }}</div>
+        <ul class="side-nav-list">
+            {% for item in context.brother_cate_list %}
+                {% if context.cate.full_name == item.full_name %}
+                    <li class="selected">
+                {% else %}
+                    <li>
+                {% endif %}
+                <a href="{% url 'website_en:list_page_index' parent_cate=context.parent_cate cate_slug=item.slug %}">{{ item.cate_name }}</a>
+{#                <a href="{{ item.get_absolute_url }}">{{ item.cate_name }}</a>#}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endblock %}
+    </div>
+
+    <div class="main-wrapper">
+        <div class="page-title-box">
+            <div class="dir-path">
+                <a href="{% url 'website_en:index' %}">Home</a>
+                <span>&gt;</span>
+                {% if context.cate.slug != context.cate.full_name %}
+                    <a href="{% url 'website_en:list_page_index' parent_cate=context.parent_cate cate_slug=context.brother_cate_list.first.slug %}">{{ context.cate.parent_name }}</a>
+{#                    <a href="{{ context.brother_cate_list.first.get_absolute_url }}">{{ context.cate.parent_name }}</a>#}
+                    <span>&gt;</span>
+                {% endif %}
+                <span>{{ context.cate.cate_name }}</span>
+            </div>
+            <div class="__title">{{ context.cate.cate_name }}</div>
+            <div id="select-menu" class="category-select-menu">
+                <div class="__name">{{ context.cate.cate_name }} <i class="iconfont icon-caret-down"></i></div>
+                    <ul class="__list">
+                        {% for item in context.brother_cate_list %}
+                            {% if context.cate.full_name == item.full_name %}
+                                <li class="selected">
+                            {% else %}
+                                <li>
+                            {% endif %}
+                            <a href="{% url 'website_en:list_page_index' parent_cate=context.parent_cate cate_slug=item.slug %}">{{ item.cate_name }}</a></li>
+{#                            <a href="{{ item.get_absolute_url }}">{{ item.cate_name }}</a></li>#}
+                        {% endfor %}
+                    </ul>
+            </div>
+        </div>
+
+
+        {% block main-wrapper %}
+            <div class="case-container article-container">
+                <div class="__list">
+                    {% for item in context.articles %}
+                        <div class="__item">
+                            <div class="__title">
+                                {% if item.url %}
+                                    <a target="_blank" href="{{ item.url }}">{{ item.title }}</a>
+                                {% else %}
+                                    <a href="javascript:;">{{ item.title }}</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+                {% include 'website_en/partials/pagination.html' %}
+
+
+        {% endblock %}
+    </div>
+</div>
+
+
+{#    <h1>common list</h1>#}
+{#    {% for a in context.articles %}#}
+{#        <a href="{{ a.get_absolute_url }}">{{ a.title }}</a>#}
+{#    {% endfor %}#}
+
+{% endblock %}
+
+{% block js-block %}
+    <script>
+        $('#select-menu .__name').on('click', function () {
+            $('#select-menu .__list').slideToggle(100);
+        })
+
+    </script>
+{% endblock %}

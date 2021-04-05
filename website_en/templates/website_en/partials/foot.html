@@ -1,0 +1,120 @@
+<div class="site-map">
+    <div class="__title">Site Map</div>
+    <div class="__section">
+        <div class="__cata-name">About Us</div>
+        <ul>
+            <li><a href="{% url 'website_en:about' slug='introduction' %}">Introduction</a></li>
+            <li><a href="{% url 'website_en:about' slug='partners' %}">Partners</a></li>
+            <li><a href="{% url 'website_en:about' slug='chronicle_of_events' %}">Chronicle of events</a></li>
+            <li><a href="{% url 'website_en:about' slug='honors' %}">Honors</a></li>
+        </ul>
+    </div>
+
+    <div class="__section">
+        <div class="__cata-name">News</div>
+        <ul>
+            <li><a href="{% url 'website_en:list_page_index' parent_cate='news' cate_slug='tcmftc_news' %}">TCMFTC news</a></li>
+            <li><a href="{% url 'website_en:list_page_index' parent_cate='news' cate_slug='industry_news' %}">Industry news</a></li>
+        </ul>
+    </div>
+    <div class="__section">
+        <div class="__cata-name">Activities</div>
+        <ul>
+            <li><a href="{% url 'website_en:list_page_index' parent_cate='activities' cate_slug='academic_activities' %}">Academic activities</a></li>
+        </ul>
+    </div>
+    <div class="__section">
+        <div class="__cata-name">Research</div>
+        <ul>
+            <li><a href="{% url 'website_en:list_page_index' parent_cate='research' cate_slug='platform' %}">Platform</a></li>
+            <li><a href="{% url 'website_en:list_page_index' parent_cate='research' cate_slug='projects' %}">Projects</a></li>
+            <li><a href="{% url 'website_en:list_page_index' parent_cate='research' cate_slug='co-operation_with_Industry' %}">Co-operation with Industry</a></li>
+        </ul>
+    </div>
+    <div class="__section">
+        <div class="__cata-name">Achievements</div>
+        <ul>
+            <li><a href="{% url 'website_en:list_page_index' parent_cate='achievements' cate_slug='articles' %}">Articles</a></li>
+            <li><a href="{% url 'website_en:list_page_index' parent_cate='achievements' cate_slug='patents' %}">Patents</a></li>
+            <li><a href="{% url 'website_en:list_page_index' parent_cate='achievements' cate_slug='honors_and_awards' %}">Honors & Awards</a></li>
+        </ul>
+    </div>
+    <div class="__section">
+        <div class="__cata-name">Staff & Student</div>
+        <ul>
+            <li><a href="{% url 'website_en:list_page_index' parent_cate='staff' cate_slug='faculty' %}">Faculty</a></li>
+            <li><a href="{% url 'website_en:list_page_index' parent_cate='staff' cate_slug='postgraduates' %}">Postgraduates</a></li>
+            <li><a href="{% url 'website_en:list_page_index' parent_cate='staff' cate_slug='visiting_professors' %}">Visiting Professors</a></li>
+            <li><a href="{% url 'website_en:list_page_index' parent_cate='staff' cate_slug='distinguished_experts' %}">Distinguished Experts</a></li>
+            <li><a href="{% url 'website_en:list_page_index' parent_cate='staff' cate_slug='visiting_students' %}">Visiting Students</a></li>
+        </ul>
+    </div>
+
+    <div class="__section">
+        <div class="__cata-name">Alumni</div>
+        <ul>
+            <li><a href="{% url 'website_en:list_page_index' parent_cate='alumni' cate_slug='alumni' %}">Alumni</a></li>
+        </ul>
+    </div>
+    <div class="__section">
+        <div class="__cata-name">Contact</div>
+        <ul>
+            <li><a href="{% url 'website_en:contact' %}">Contact</a></li>
+        </ul>
+    </div>
+    <div class="__section show-xs">
+        <ul><li><a href="{% url 'website:index' %}"><i class="iconfont icon-earth"></i> 访问中文站点 ></a></li></ul>
+    </div>
+</div>
+
+{% if context.friend_links %}
+    <div class="friend-link">
+        <div class="__title">Related links</div>
+        <div class="__cata-name">Related links</div>
+        <ul>
+            {% for fl in context.friend_links %}
+                <li><a href="{{ fl.url }}" target="_blank">{{ fl.title }}</a></li>
+            {% endfor %}
+
+        </ul>
+    </div>
+{% endif %}
+
+<div class="footer__contact">
+    <div class="footer-brand">
+        <div class="footer-logo"><img src="{% static 'website/images/footer--logo.png' %}" alt=""></div>
+        <div class="__name-txt"><img src="{% static 'website/images/footer--name.png' %}" alt=""></div>
+    </div>
+    <div class="__contact-msg">
+        <div>
+            <span>Address：</span>
+            <span>{{ context.en_site_info.addr }}</span>
+        </div>
+        <div>
+            <span>Contact：</span>
+            <span>{{ context.en_site_info.linkman }}</span>
+        </div>
+    </div>
+    <div class="__contact-msg">
+        <div>
+            <span>TEL：</span>
+            <span><a href="tel:{{ context.en_site_info.tel }}">{{ context.en_site_info.tel }}</a></span>
+        </div>
+        <div>
+            <span>E-mail：</span>
+            <span><a href="{{ context.en_site_info.email }}">{{ context.en_site_info.email }}</a></span>
+        </div>
+    </div>
+
+    {% if context.en_site_info.qr %}
+    <div class="qr">
+        <img src="{{ context.en_site_info.qr.url }}" alt="">
+        <br>
+        <div>WeChat</div>
+    </div>
+    {% endif %}
+</div>
+
+<div class="copy">
+    {{ context.en_site_info.copy }} <!--a class="auth" href="#">绚思科技提供技术支持</a -->
+</div>

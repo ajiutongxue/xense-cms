@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ context.en_site_info.title }}</title>
+    <meta name="keywords" content="{{ context.en_site_info.keywords }}">
+    <meta name="description" content="{{ context.en_site_info.description }}">
+    <meta name="author" content="成都绚思科技 85103350@qq.com">
+    <link rel="stylesheet" href="{% static 'website/css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'website/css/animate.css' %}">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2170960_1z73dyog7r4.css">
+    <link rel="stylesheet" href="{% static 'website_en/css/style.css' %}">
+
+    {% block head %}{% endblock %}
+
+    {% block sub-page-head %}{% endblock %}
+</head>
+<body>
+
+<div class="body-container">
+{% include 'website_en/partials/head.html' %}
+
+    {% block face-block %}{% endblock %}
+
+    {% block body-block %}{% endblock %}
+
+    {% block single-page-body %}{% endblock %}
+
+    <div class="footer">
+        {% include 'website_en/partials/foot.html' %}
+    </div>
+</div>
+
+<script src="{% static 'website/js/jquery-2.1.4.js' %}"></script>
+
+<script>
+    const $navbar = $('#navbar');
+    $navbar.on('mouseover', 'li', function() {
+        $(this).addClass('active');
+    });
+    $navbar.on('mouseout', 'li', function () {
+        $(this).removeClass('active');
+    });
+
+    const $hbNav = $('#hb-nav');
+    const $hbBars = $('#hb-bars');
+    const $hbList = $('#hb-nav__list');
+    const $header = $('#header');
+    let headerHeight = $header.outerHeight();
+    $hbList.css('top', headerHeight);
+
+    $(window).on('resize', () => {
+        headerHeight = $header.outerHeight();
+        $hbList.css('top', headerHeight);
+
+    })
+
+    $hbBars.on('click', function (e) {
+        e.stopPropagation();
+        $hbNav.toggleClass('active');
+        $hbList.slideToggle(100);
+
+        if ($hbNav.hasClass('active')) {
+            $(document).on('click.hideMenu', function (e) {
+                // console.log(e.pageY);
+                if (e.pageY < headerHeight + $hbList.outerHeight()) return;
+                $hbBars.click();
+                $(document).off('.hideMenu');
+                return false;
+            });
+        } else {
+            $(document).off('.hideMenu');
+        }
+
+    })
+
+</script>
+
+{% block js-block %}
+{% endblock %}
+</body>
+</html>
