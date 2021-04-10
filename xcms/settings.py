@@ -148,8 +148,16 @@ EMAIL_FORM = EMAIL_HOST_USER
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/') # 不写这个就没法 manage.py collectstatic
 # upload setting
 
 MEDIA_URL = '/uploads/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+CKEDITOR_CONFIGS = {
+  'default': {
+    'toolbar': 'full',  # 工具条功能
+    # 'height': 300,   # 编辑器高度
+    # 'width': 300,   # 编辑器宽
+  },
+}
 CKEDITOR_UPLOAD_PATH = 'upload/'

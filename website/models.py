@@ -18,7 +18,7 @@ class AbsPost(models.Model):
     url = models.CharField(max_length=100, verbose_name='链接', blank=True, null=True)
     slug = models.CharField(max_length=100, null=False, verbose_name='url 优化', blank=True)
     thumbnail = models.ImageField(upload_to='post_thumbnail', storage=ImageStorage(), null=True,
-                                  help_text='图片尺寸：300x150', blank=True, verbose_name='缩略图')
+                                  help_text='图片尺寸：600x425 (研究平台)、600x365 (其它)', blank=True, verbose_name='缩略图')
     summary = models.TextField(max_length=150, verbose_name='摘要', null=True, blank=True, help_text='中文字数 50 个左右较好')
     # content = models.TextField(blank=True, null=True, verbose_name='正文')
     content = RichTextUploadingField(verbose_name='正文')
