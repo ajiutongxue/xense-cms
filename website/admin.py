@@ -96,11 +96,16 @@ class SiteInfoAdmin(object):
 
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class ACategoryAdmin(admin.ModelAdmin):
     list_display = ['rank_num', 'cate_name', 'slug', 'full_name', 'parent_name', 'lang',
                     'default_self_template']
     # list_editable = ('rank_num', 'parent_name', 'parent_name_en', 'default_self_template')
 # admin.site.register(Category, CategoryAdmin)
+
+
+@admin.register(Focus)
+class AFocusAdmin(admin.ModelAdmin):
+    list_display = ['id', 'rank_num', 'lang']
 
 
 class CategoryAdmin(object):
@@ -153,6 +158,8 @@ class NewsAdmin(object):
     list_display = ['id', 'title', 'category', 'slug', 'rank_num']
     model_icon = 'fa fa-times'
     fields = ('category', 'title', 'slug', 'thumbnail', 'summary', 'rank_num', 'writer', 'pub_date', 'content')
+    # fields.title.short_description = '这是大标题'
+    view_on_site = True
 
     def get_form_helper(self, *args, **kwargs):
         self.form_obj.fields['category'].queryset = Category.objects.filter(full_name__startswith='news')
@@ -165,6 +172,7 @@ class NewsAdmin(object):
 
 
 class TCMFTCNewsAdmin(NewsAdmin):
+    view_on_site = True
 
     def queryset(self):
         qs = super(TCMFTCNewsAdmin, self).queryset()

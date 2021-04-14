@@ -361,7 +361,7 @@ class Focus(models.Model):
     rank_num = models.IntegerField(default=1, verbose_name='排序', help_text='数字大的在前面')
     is_published = models.BooleanField(default=True, verbose_name='是否发布')
     url = models.CharField(max_length=128, default='', verbose_name='链接到')
-    focus_img = models.ImageField(upload_to='focus', storage=ImageStorage(), default='', verbose_name='图片',
+    focus_img = models.ImageField(upload_to='focus', storage=ImageStorage(), default='', null=True, blank=True, verbose_name='图片',
                                   help_text='尺寸：1600 x 560')
 
     class Meta:

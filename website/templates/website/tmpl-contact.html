@@ -7,7 +7,7 @@
             {% if context.send_ok %}
                 <h1 style="font-weight: normal; text-align: center; line-height: 4em;">发送成功!</h1>
             {% else %}
-                <form id="send-msg" action="{% url 'website:contact_sendmail' %}" method="post">
+                <form id="send-msg" action="{% url 'website:contact' %}" method="POST">
                     {% csrf_token %}
                     <div class="__title">留言板</div>
                     <div class="__label">主题</div>
