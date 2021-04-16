@@ -444,7 +444,7 @@ class StaffFacultyAdmin(object):
     教师
     """
     list_display = ['id', 'name', 'title', 'title1', 'category', 'rank_num', 'is_published']
-    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published')
+    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published', 'content')
     list_editable = ('title', 'title1', 'rank_num', 'is_published', 'category')
 
     # formfield_overrides = {
@@ -463,7 +463,7 @@ class StaffFacultyAdmin(object):
 
 class StaffFacultyAdmin_en(object):
     list_display = ['id', 'name', 'title', 'title1', 'category', 'rank_num', 'is_published']
-    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published')
+    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published', 'content')
     list_editable = ('title', 'title1', 'rank_num', 'is_published', 'category')
 
     def get_form_helper(self, *args, **kwargs):
@@ -481,7 +481,7 @@ class StaffPostgraduatesAdmin(object):
     研究生
     """
     list_display = ['id', 'name', 'title', 'title1', 'category', 'rank_num', 'is_published']
-    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published')
+    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published', 'content')
     list_editable = ('title', 'title1', 'rank_num', 'is_published', 'category')
 
     def get_form_helper(self, *args, **kwargs):
@@ -499,7 +499,7 @@ class StaffPostgraduatesAdmin_en(object):
     研究生
     """
     list_display = ['id', 'name', 'title', 'title1', 'category', 'rank_num', 'is_published']
-    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published')
+    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published', 'content')
     list_editable = ('title', 'title1', 'rank_num', 'is_published', 'category')
 
     def get_form_helper(self, *args, **kwargs):
@@ -517,7 +517,7 @@ class StaffProfessorsAdmin(object):
     访问教授
     """
     list_display = ['id', 'name', 'title', 'title1', 'category', 'rank_num', 'is_published']
-    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published')
+    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published', 'content')
     list_editable = ('title', 'title1', 'rank_num', 'is_published', 'category')
 
     def get_form_helper(self, *args, **kwargs):
@@ -535,7 +535,7 @@ class StaffProfessorsAdmin_en(object):
     访问教授
     """
     list_display = ['id', 'name', 'title', 'title1', 'category', 'rank_num', 'is_published']
-    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published')
+    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published', 'content')
     list_editable = ('title', 'title1', 'rank_num', 'is_published', 'category')
 
     def get_form_helper(self, *args, **kwargs):
@@ -553,7 +553,7 @@ class StaffExpertsAdmin(object):
     特聘专家
     """
     list_display = ['id', 'name', 'title', 'title1', 'category', 'rank_num', 'is_published']
-    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published')
+    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published', 'content')
     list_editable = ('title', 'title1', 'rank_num', 'is_published', 'category')
 
     def get_form_helper(self, *args, **kwargs):
@@ -571,7 +571,7 @@ class StaffExpertsAdmin_en(object):
     特聘专家
     """
     list_display = ['id', 'name', 'title', 'title1', 'category', 'rank_num', 'is_published']
-    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published')
+    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published', 'content')
     list_editable = ('title', 'title1', 'rank_num', 'is_published', 'category')
 
     def get_form_helper(self, *args, **kwargs):
@@ -589,7 +589,7 @@ class StaffStudentsAdmin(object):
     访问学生
     """
     list_display = ['id', 'name', 'title', 'title1', 'category', 'rank_num', 'is_published']
-    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published')
+    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published', 'content')
     list_editable = ('title', 'title1', 'rank_num', 'is_published', 'category')
 
     def get_form_helper(self, *args, **kwargs):
@@ -607,7 +607,7 @@ class StaffStudentsAdmin_en(object):
     访问学生
     """
     list_display = ['id', 'name', 'title', 'title1', 'category', 'rank_num', 'is_published']
-    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published')
+    fields = ('category', 'name', 'title', 'title1', 'thumbnail', 'introduce', 'rank_num', 'is_published', 'content')
     list_editable = ('title', 'title1', 'rank_num', 'is_published', 'category')
 
     def get_form_helper(self, *args, **kwargs):

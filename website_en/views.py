@@ -27,8 +27,14 @@ def index(request):
     calendars = Calendar.objects.filter(is_published=True, lang='en').order_by('-rank_num', '-active_time', '-id')
     research_list = Post_en.objects.filter(category__full_name='research-platform', category__lang='en',
                                            is_published=True).order_by('-rank_num', '-id')[:4]
-    honor_list = Gallery_en.objects.filter(category__full_name='achievements-honors', category__lang='en',
-                                           is_published=True).order_by('-rank_num', '-id')[:4]
+    honor_list = list(range(6))
+    _honor_list = Gallery_en.objects.filter(category__full_name='achievements-honors', category__lang='en',
+                                           is_published=True).order_by('-rank_num', '-id')[:6]
+    # 控制实际显示的元素数量，数据不够将会留空
+    _h_i = 0    # _honor_index
+    for v in _honor_list:
+        honor_list[_h_i] = v
+        _h_i += 1
     friend_links = SimplePost_en.objects.filter(category__full_name='friend-links', category__lang='en',
                                                 is_published=True).order_by('-rank_num')
     context = {
@@ -63,63 +69,95 @@ def contact(request):
     page = get_object_or_404(SinglePage_en, slug='contact')
     cate = Category.objects.get(full_name='single-contact', lang='en')
     tmpl = x_get_page_tmpl('tmpl-contact', cate, page)
-    brother_cate_list = SinglePage_en.objects.filter(category__full_name='single-contact',
-                                                     category__lang='en').order_by('-rank_num')
-
+    brother_cate_list = SinglePage_en.objects.filter(category__full_name='single-contact', category__lang='en').order_by(
+        '-rank_num')
     context = {
         'page': page,
         'url_base': 'website_en:contact',
         'brother_cate_list': brother_cate_list,
         'en_site_info': en_site_info,
+        'send_status': 'NO'
     }
+    if request.method == 'POST':
+        title = request.POST['title']
+        cate = '合作交流' if int(request.POST['cate']) == 1 else '意见建议'
+        uname = request.POST['uname']
+        tel = request.POST['tel']
+        content = request.POST['content']
+        msg = '主题：{}\n分类：{}\n如何称呼：{}\n联系方式：{}\n正文：{}'.format(title, cate, uname, tel, content)
+        # html_message = ''.format(request.POST['content'])
+        email_from = settings.EMAIL_FORM
+        linkman = ['yang_tao_cn@163.com']
+        if en_site_info.email:
+            linkman.append(en_site_info.email)
+        # 发送邮件
+        try:
+            send_mail(title, msg, email_from, linkman)
+            context['send_status'] = 'OK'
+        except:
+            context['send_status'] = 'ERR'
     return render(request, 'website_en/{}.html'.format(tmpl), {'context': context})
 
-
-def contact_ok(request):
-    page = get_object_or_404(SinglePage_en, slug='contact')
-    cate = Category.objects.get(full_name='single-contact', lang='en')
-    tmpl = x_get_page_tmpl('tmpl-contact', cate, page)
-    brother_cate_list = SinglePage_en.objects.filter(category__full_name='single-contact',
-                                                     category__lang='en').order_by('-rank_num')
-
-    context = {
-        'page': page,
-        'url_base': 'website_en:contact',
-        'brother_cate_list': brother_cate_list,
-        'en_site_info': en_site_info,
-        'send_ok': True
-    }
-    return render(request, 'website_en/{}.html'.format(tmpl), {'context': context})
+    # page = get_object_or_404(SinglePage_en, slug='contact')
+    # cate = Category.objects.get(full_name='single-contact', lang='en')
+    # tmpl = x_get_page_tmpl('tmpl-contact', cate, page)
+    # brother_cate_list = SinglePage_en.objects.filter(category__full_name='single-contact',
+    #                                                  category__lang='en').order_by('-rank_num')
+    #
+    # context = {
+    #     'page': page,
+    #     'url_base': 'website_en:contact',
+    #     'brother_cate_list': brother_cate_list,
+    #     'en_site_info': en_site_info,
+    # }
+    # return render(request, 'website_en/{}.html'.format(tmpl), {'context': context})
 
 
-def sendmail(request):
-    title = request.POST['title']
-    cate = '合作交流' if int(request.POST['cate']) == 1 else '意见建议'
-    uname = request.POST['uname']
-    tel = request.POST['tel']
-    content = request.POST['content']
-    msg = '主题：{}\n分类：{}\n如何称呼：{}\n联系方式：{}\n正文：{}'.format(title, cate, uname, tel, content)
-    # html_message = ''.format(request.POST['content'])
-    email_from = settings.EMAIL_FORM
-    linkman = ['85103350@qq.com']
-    if en_site_info.email:
-        linkman.append(en_site_info.email)
-    # 发送邮件
-    send_mail(title, msg, email_from, linkman)
-    # return HttpResponse("ok")
-    page = get_object_or_404(SinglePage_en, slug='contact')
-    cate = Category.objects.get(full_name='single-contact', lang='en')
-    tmpl = x_get_page_tmpl('tmpl-contact', cate, page)
-    brother_cate_list = SinglePage_en.objects.filter(category__full_name='single-contact',
-                                                     category__lang='en').order_by('-rank_num')
-    context = {
-        'page': page,
-        'url_base': 'website_en:contact',
-        'brother_cate_list': brother_cate_list,
-        'en_site_info': en_site_info,
-        'send_ok': True
-    }
-    return render(request, 'website_en/{}.html'.format(tmpl), {'context': context})
+# def contact_ok(request):
+#     page = get_object_or_404(SinglePage_en, slug='contact')
+#     cate = Category.objects.get(full_name='single-contact', lang='en')
+#     tmpl = x_get_page_tmpl('tmpl-contact', cate, page)
+#     brother_cate_list = SinglePage_en.objects.filter(category__full_name='single-contact',
+#                                                      category__lang='en').order_by('-rank_num')
+#
+#     context = {
+#         'page': page,
+#         'url_base': 'website_en:contact',
+#         'brother_cate_list': brother_cate_list,
+#         'en_site_info': en_site_info,
+#         'send_ok': True
+#     }
+#     return render(request, 'website_en/{}.html'.format(tmpl), {'context': context})
+
+
+# def sendmail(request):
+#     title = request.POST['title']
+#     cate = '合作交流' if int(request.POST['cate']) == 1 else '意见建议'
+#     uname = request.POST['uname']
+#     tel = request.POST['tel']
+#     content = request.POST['content']
+#     msg = '主题：{}\n分类：{}\n如何称呼：{}\n联系方式：{}\n正文：{}'.format(title, cate, uname, tel, content)
+#     # html_message = ''.format(request.POST['content'])
+#     email_from = settings.EMAIL_FORM
+#     linkman = ['85103350@qq.com']
+#     if en_site_info.email:
+#         linkman.append(en_site_info.email)
+#     # 发送邮件
+#     send_mail(title, msg, email_from, linkman)
+#     # return HttpResponse("ok")
+#     page = get_object_or_404(SinglePage_en, slug='contact')
+#     cate = Category.objects.get(full_name='single-contact', lang='en')
+#     tmpl = x_get_page_tmpl('tmpl-contact', cate, page)
+#     brother_cate_list = SinglePage_en.objects.filter(category__full_name='single-contact',
+#                                                      category__lang='en').order_by('-rank_num')
+#     context = {
+#         'page': page,
+#         'url_base': 'website_en:contact',
+#         'brother_cate_list': brother_cate_list,
+#         'en_site_info': en_site_info,
+#         'send_ok': True
+#     }
+#     return render(request, 'website_en/{}.html'.format(tmpl), {'context': context})
 
 
 # path('<parent_cate>/<cate_slug>/<int:page_no>/', views.list_page, name='list_page'),
@@ -165,8 +203,14 @@ def list_page(request, parent_cate, cate_slug, page_num=1):
 
 # path('<parent_cate>/<cate_slug>/p/<pid>-<slug>/', views.article, name='article'),
 def article(request, parent_cate, cate_slug, pid, slug):
-    page = get_object_or_404(Post_en, id=pid, is_published=True)
-    tmpl = x_get_page_tmpl('tmpl-post', page.category, page)
+    _M = Post_en
+    if parent_cate == 'staff':
+        _M = Staff_en
+    page = get_object_or_404(_M, id=pid, is_published=True)
+    if parent_cate == 'staff':
+        tmpl = 'tmpl-staff'
+    else:
+        tmpl = x_get_page_tmpl('tmpl-post', page.category, page)
     relative_list = Post_en.objects.filter(category__full_name=page.category.full_name, category__lang='en',
                                            is_published=True).order_by('-rank_num', '-id').exclude(id=pid)[:6]
     context = {

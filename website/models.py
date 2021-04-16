@@ -55,6 +55,7 @@ ARTICLE_TMPL_CHOICES = (
     ('tmpl-single', '独立文章模版'),
     ('tmpl-single-1', '独立文章模版1'),
     ('tmpl-contact', '联系方式模版'),
+    # ('tmpl-staff', '人员档案详情')  # 这个和上面联系方式一样，都在view里面写死了，不需要
 )
 
 
@@ -265,6 +266,13 @@ class Staff(models.Model):
     rank_num = models.IntegerField(default=1, verbose_name='排序')
     is_published = models.BooleanField(default=True, verbose_name='是否发布')
 
+    def get_absolute_url(self):
+        parent_slug = self.category.full_name.split('-')[0]
+        return reverse(
+            'website:article',
+            args=[parent_slug, self.category.slug, self.id, self.slug if self.slug else self.name]
+        )
+
     class Meta:
         ordering = ['-rank_num']
         verbose_name = '师资力量'
@@ -289,6 +297,13 @@ class Staff_en(models.Model):
     content = RichTextUploadingField(verbose_name='正文', blank=True, null=True)
     rank_num = models.IntegerField(default=1, verbose_name='排序')
     is_published = models.BooleanField(default=True, verbose_name='是否发布')
+
+    def get_absolute_url(self):
+        parent_slug = self.category.full_name.split('-')[0]
+        return reverse(
+            'website_en:article',
+            args=[parent_slug, self.category.slug, self.id, self.slug if self.slug else self.name]
+        )
 
     class Meta:
         ordering = ['-rank_num']

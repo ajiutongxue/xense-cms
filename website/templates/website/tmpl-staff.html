@@ -1,0 +1,60 @@
+{% extends 'website/layout.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'website/css/page.css' %}">
+{% endblock %}
+
+{% block body-block %}
+    <div class="detail-container">
+        <div class="detail-content-wrapper" style="flex: 1">
+            <div class="page-title-box">
+                <div class="dir-path">
+                    <a href="{% url 'website:index' %}">首页</a>
+                    <span>&gt;</span>
+                    <a href="{{ context.article.category.get_absolute_url }}">{{ context.article.category.cate_name }}</a>
+                    <span>&gt;</span>
+                    <span>{{ context.article.name }}</span>
+                </div>
+            </div>
+
+            <div class="master-container">
+                <div class="__master" style="border-bottom: none;">
+                    <div class="__photo">
+                        {% if context.article.thumbnail %}
+                            <img src="{{ context.article.thumbnail.url }}" alt="">
+                        {% else %}
+                            <img src="{% static 'website/images/thumb-holder-300x180.jpg' %}" alt="">
+                        {% endif %}
+                    </div>
+                    <div class="__info">
+                        <div class="__meta">
+                            <div class="__name">{{ context.article.name }}</div>
+                            <div class="__call">
+                                {% if context.article.title is not None %}
+                                    {{ context.article.title }}
+                                {% endif %}
+                            </div>
+                            <div class="__title">
+                                {% if context.article.title1 is not None %}
+                                    {{ context.article.title1 }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="__des">
+                            <p>{{ context.article.content | safe }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block js-block %}
+    <script type="text/javascript" charset="utf-8"
+            src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=3&amp;lang=zh"></script>
+    <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+{% endblock %}

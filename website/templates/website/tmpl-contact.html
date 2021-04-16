@@ -4,8 +4,10 @@
 <div class="contact-container" style="display: flex;">
     <div class="send-msg-box">
         <div class="__warpper">
-            {% if context.send_ok %}
+            {% if context.send_status == 'OK' %}
                 <h1 style="font-weight: normal; text-align: center; line-height: 4em;">发送成功!</h1>
+            {% elif context.send_status == 'ERR' %}
+                <h1 style="font-weight: normal; text-align: center; padding-top:1em; font-size: 20px">留言未能发送成功，请稍后再试。</h1>
             {% else %}
                 <form id="send-msg" action="{% url 'website:contact' %}" method="POST">
                     {% csrf_token %}

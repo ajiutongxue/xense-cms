@@ -30,14 +30,16 @@ def index(request):
     calendars = Calendar.objects.filter(is_published=True, lang='zh').order_by('-rank_num', '-active_time', '-id')
     research_list = Post.objects.filter(category__full_name='research-platform', category__lang='zh',
                                         is_published=True).order_by('-rank_num', '-id')[:4]
-    honor_list = Gallery.objects.filter(category__full_name='achievements-honors', category__lang='zh',
-                                        is_published=True).order_by('-rank_num', '-id')[:4]
+    honor_list = list(range(6))
+    _honor_list = Gallery.objects.filter(category__full_name='achievements-honors', category__lang='zh',
+                                        is_published=True).order_by('-rank_num', '-id')[:6]
+    # 控制实际显示的元素数量，数据不够将会留空
+    _h_i = 0    # _honor_index
+    for v in _honor_list:
+        honor_list[_h_i] = v
+        _h_i += 1
     friend_links = SimplePost.objects.filter(category__full_name='friend-links', category__lang='zh',
                                              is_published=True).order_by('-rank_num')
-
-    print('sssssssssss')
-    print(zh_site_info)
-
     context = {
         'focus_list': focus_list,
         'activities': activities,
@@ -77,6 +79,7 @@ def contact(request):
         'url_base': 'website:contact',
         'brother_cate_list': brother_cate_list,
         'zh_site_info': zh_site_info,
+        'send_status': 'NO'
     }
     if request.method == 'POST':
         title = request.POST['title']
@@ -91,8 +94,11 @@ def contact(request):
         if zh_site_info.email:
             linkman.append(zh_site_info.email)
         # 发送邮件
-        send_mail(title, msg, email_from, linkman)
-        context['send_ok'] = True
+        try:
+            send_mail(title, msg, email_from, linkman)
+            context['send_status'] = 'OK'
+        except:
+            context['send_status'] = 'ERR'
     return render(request, 'website/{}.html'.format(tmpl), {'context': context})
 
 
@@ -188,8 +194,15 @@ def list_page(request, parent_cate, cate_slug, page_num=1):
 
 # path('<parent_cate>/<cate_slug>/p/<pid>-<slug>/', views.article, name='article'),
 def article(request, parent_cate, cate_slug, pid, slug):
-    page = get_object_or_404(Post, id=pid, is_published=True)
-    tmpl = x_get_page_tmpl('tmpl-post', page.category, page)
+    _M = Post
+    if parent_cate == 'staff':
+        _M = Staff
+    page = get_object_or_404(_M, id=pid, is_published=True)
+    # tmpl = 'tmpl-post'
+    if parent_cate == 'staff':
+        tmpl = 'tmpl-staff'
+    else:
+        tmpl = x_get_page_tmpl('tmpl-post', page.category, page)
     relative_list = Post.objects.filter(category__full_name=page.category.full_name, category__lang='zh',
                                         is_published=True).order_by('-rank_num', '-id').exclude(id=pid)[:6]
     context = {

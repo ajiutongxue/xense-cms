@@ -69,7 +69,7 @@
                 </div>
                 <div class="__info">
                     <div class="__meta">
-                        <div class="__name">{{ item.name }}</div>
+                        <div class="__name"><a style="color: #522a56" href="{{ item.get_absolute_url }}">{{ item.name }}</a></div>
                         <div class="__call">
                             {% if item.title is not None %}
                                 {{ item.title }}

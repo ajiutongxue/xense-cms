@@ -112,13 +112,13 @@
             <div class="__title">Achievements <span class="__divider"></span><a href="{% url 'website_en:list_page_index' parent_cate='achievements' cate_slug='honors_and_awards' %}">more</a></div>
             <div class="__list">
                 {% for h in context.honor_list %}
-                    {% if h.thumbnail %}
                     <div class="__item">
+                    {% if h.thumbnail %}
                         <a href="{% url 'website_en:list_page_index' parent_cate='achievements' cate_slug='honors_and_awards' %}">
                             <div class="__img-box"><img src="{{ h.thumbnail.url }}" alt=""></div>
                         </a>
-                    </div>
                     {% endif %}
+                    </div>
 
                 {% endfor %}
 

@@ -460,6 +460,20 @@
   .index__section-study .__item + .__item {
     margin-left: 4px;
   }
+  .index__section-honor .__list {
+    white-space: nowrap;
+    overflow: hidden;
+    overflow-x: auto;
+    display: block;
+  }
+  .index__section-honor .__list .__item {
+    width: auto;
+    display: inline;
+  }
+  .index__section-honor .__list .__item .__img-box {
+    display: inline-block;
+    width: calc(25% - 8px);
+  }
   .index__section-study .__item .__link-txt {
     position: relative;
     font-size: 14px;

@@ -5,7 +5,16 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ context.zh_site_info.title }}</title>
+    <title>
+        {{ context.zh_site_info.title }} |
+        {% if context.seo_title %}
+            {{ context.seo_title }}
+        {% elif context.article.title %}
+            {{ context.article.title }}
+        {% elif context.cate %}
+            {{ context.cate.cate_name }}
+        {% endif %}
+    </title>
     <meta name="keywords" content="{{ context.zh_site_info.keywords }}">
     <meta name="description" content="{{ context.zh_site_info.description }}">
     <meta name="author" content="成都绚思科技 85103350@qq.com">

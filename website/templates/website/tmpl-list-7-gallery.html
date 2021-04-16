@@ -69,6 +69,7 @@
                 {% if item.thumbnail %}
                     <div class="__item">
                         <img src="{{ item.thumbnail.url }}" alt="">
+                        <div style="margin: 8px 2px; line-height:1.4em; font-size: 14px;">{{ item.title }}</div>
                     </div>
                 {% endif %}
             {% endfor %}
